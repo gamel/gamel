@@ -1,4 +1,4 @@
 gamel
 =====
 
-The gamel Scala extention provides useful abstrations of game code to users
+The gamel Scala extention provides useful abstractions of game code to users
