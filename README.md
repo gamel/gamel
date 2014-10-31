@@ -51,8 +51,22 @@ The syntax of GAMEL is currently modeled after SQL.
   ```
 
   ```
-  start game <game_name>
+  start game
   ```
+
+Build Tool
+----------
+We are using sbt (Simple Build Tool) to manage this project. 
+
+Run:
+
+  ```
+  sbt run
+  sbt compule
+  sbt test
+  sbt clean
+  ```
+
 
 Nice-to-have features
 ---------------------
