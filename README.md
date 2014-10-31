@@ -2,6 +2,8 @@ GAMEL
 =====
 GAMEL is an extension written in Scala to facilitate text adventure game making. 
 
+The gamel Scala extention provides useful abstractions of game code to users.
+
 Currently under development.
 
 Object (Proposed)
