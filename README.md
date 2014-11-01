@@ -62,7 +62,7 @@ Run:
 
   ```
   sbt run
-  sbt compule
+  sbt compile
   sbt test
   sbt clean
   ```
