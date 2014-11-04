@@ -195,7 +195,7 @@ create scene <scene> (
 
 Define a transition
 ```
-transition <scene> <name> <name> = [<functions>]
+transition <scene> <name> <scene> = [<functions>]
 ```
 
 Use a transition
