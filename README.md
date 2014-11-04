@@ -4,8 +4,11 @@ GAMEL is a Scala internal DSL to facilitate game making. The gamel Scala extenti
 
 Currently under development.
 
-entity
-------
+The language
+============
+
+Entities
+--------
 
 An entity is an object in the game. This could be anything from a character to a box, as the user pleases. An entity can have ownership of other entities. It can also have action handlers, which execute user-defined code when an action is triggered.
 
@@ -35,7 +38,8 @@ define entity Foo (
     action fooing = [F] // F is some Scala func
 )
 create entity Foo foo // create a Foo called foo
-foo does fooing (<parameters>) // trigger the fooing action of Foo on the entity instance foo
+foo does fooing (<parameters>) // trigger the fooing action of Foo 
+                               // on the entity instance foo
 ```
 If the action is not defined by the entity, an error is printed to the console, and the program attempts to continue.
 
@@ -131,8 +135,8 @@ foo goes down (<parameters>) // foo uses the down transition of Scene1
 ```
 
 By using the `goes` construct, an entity does two things:
-1) the entity attempts to use the given transition on its current owning scene with the given parameters
-2) the entity is given to the scene connected by the transition to the entity's current scene
+(1) the entity attempts to use the given transition on its current owning scene with the given parameters, and 
+(2) the entity is given to the scene connected by the transition to the entity's current scene.
 
 If this fails because the transition is not defined for the current scene, the entity's `failedToGo` action is triggered.
 
@@ -148,6 +152,55 @@ object HelloWorld extends App { // normal Scala
         ...
     )
 }
+```
+
+List of Language Constructs
+----------------------------
+Define an entity-type
+```
+define entity <type> (
+    has <type> <name>
+    action <action> = [<functions>]
+)
+```
+
+Instantiate an entity
+```
+create entity <type> <name>
+```
+
+Trigger an action
+```
+<entity> does <action> (<parameters>)
+```
+
+Access permanently owned entity
+```
+<entity>.<entity>
+```
+
+Reposessing an entity
+```
+<entity or scene> gets <entity> from <entity or scene>
+<entity or scene> gets <entity> from nowhere
+<entity or scene> gets <entity> from anywhere
+```
+
+Create a scene
+```
+create scene <scene> (
+    has <type> <name>
+)
+```
+
+Define a transition
+```
+transition <scene> <name> <name> = [<functions>]
+```
+
+Use a transition
+```
+<entity> goes <transition> (<parameters>)
 ```
 
 Build Tool
