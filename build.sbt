@@ -16,3 +16,5 @@ libraryDependencies ++= Seq(
 initialCommands in console := """println("GAMEL Project by Tianyu Cheng, Mark Mansi and Benjamin Lin!!!")"""
 
 scalacOptions += "-deprecation"
+
+scalacOptions += "-feature"
