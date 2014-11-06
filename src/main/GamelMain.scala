@@ -8,4 +8,10 @@ object GamelCode extends App {
         
     ) 
 
+    create scene 'Room as <(
+        has - 'Fizz > 'buzz
+    )
+
+    create entity 'Tianyu called 'tianyu
+
 }
