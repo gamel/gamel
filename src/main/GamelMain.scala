@@ -3,13 +3,13 @@ import gamel._
 
 object GamelCode extends App {
 
-    define entity 'Tianyu as <(
+    define entity 'Tianyu as (
         has - 'Foo > 'foo,
-        has - 'Bar > 'bar
-        
+        has - 'Bar > 'bar,
+        action - 'Fall := () 
     ) 
 
-    create scene 'Room as <(
+    create scene 'Room as (
         has - 'Fizz > 'buzz
     )
 

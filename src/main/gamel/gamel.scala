@@ -50,11 +50,13 @@ package object gamel {
         def - (s: Symbol): HasObj = new HasObj(s)
     }
 
+    // handles the "action" construct
+    object action {
+        def - (s: Symbol): ActionObj = new ActionObj(s)
+    }
+
     // Some implicit conversions
     implicit def symbolToEntity(s: Symbol): Entity = new Entity(s)
     implicit def symbolToScene(s: Symbol): Scene = new Scene(s)
-
-    // more elegant list syntax
-    def <(owned: Property*): List[Property] = List(owned:_*)
 
 }
