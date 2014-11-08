@@ -7,6 +7,8 @@ Currently under development.
 The language
 ============
 
+The exact syntax is prone to change.
+
 Entities
 --------
 
