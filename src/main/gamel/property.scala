@@ -1,14 +1,17 @@
+
+
 package gamel;
 
 // a property, such as HasObj and ActionObj
-protected[gamel] trait Property
+protected[gamel] trait Property {
+  var name: Symbol = null
+}
 
 // represents a "has" construct
-protected[gamel] case class HasObj(t: Symbol) extends Property{
+protected[gamel] case class HasObj(t: Symbol) extends Property {
     var entity_type = t
-    var entity_name = 'Placeholder
     def > (n: Symbol): HasObj = {
-        this.entity_name = n
+        this.name = n
         this
     }
 }
@@ -17,8 +20,8 @@ protected[gamel] case class HasObj(t: Symbol) extends Property{
 trait ActionParam
 trait ActionResult
 
-protected[gamel] case class ActionObj(t: Symbol) extends Property{
-    var action_name = t
+protected[gamel] case class ActionObj(t: Symbol) extends Property {
+    name = t
     var action_funcs: List[ActionParam => ActionResult] = List()
     def := (funcs: (ActionParam => ActionResult)*) = {
         this.action_funcs = List(funcs:_*)
