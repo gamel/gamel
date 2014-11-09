@@ -205,6 +205,16 @@ Use a transition
 <entity> goes <transition> (<parameters>)
 ```
 
+Todo
+----
++ Action Object (Mark)
++ owns relation (if something owns something)
++ Scene (Tianyu)
++ gets ... from ... (Ben)
++ owns (Ben)
++ entity.name/entity->name (Ben)
++ does (Mark)
+
 Build Tool
 ----------
 We are using sbt (Simple Build Tool) to manage this project. 
@@ -221,6 +231,7 @@ Run:
 
 Nice-to-have features
 ---------------------
++ is
 + convert to native code using latest Java features
 + arrays
 + compatibility with Java
