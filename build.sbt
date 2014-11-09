@@ -4,7 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.11.1"
 
-scalaSource in Compile := baseDirectory.value / "src/main"
+scalaSource in Compile := baseDirectory.value / "src/main" 
 
 scalaSource in Test := baseDirectory.value / "src/test"
 
@@ -16,3 +16,7 @@ libraryDependencies ++= Seq(
 initialCommands in console := """println("GAMEL Project by Tianyu Cheng, Mark Mansi and Benjamin Lin!!!")"""
 
 scalacOptions += "-deprecation"
+
+scalacOptions += "-feature"
+
+scalacOptions += "-language:implicitConversions"
