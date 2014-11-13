@@ -16,7 +16,7 @@ abstract class GamelGame {
 
   var fps = 30
 
-  // var fullscreen = false       // not supported yet
+  var fullscreen = false       // not supported yet
   
 }
 
