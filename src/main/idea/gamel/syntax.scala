@@ -4,7 +4,7 @@ import scala.collection.mutable.{Map, HashMap}
 
 object define {
 
-  def <=(ent: GamelEntity): GamelEntity = {
+  def a(ent: GamelEntity): GamelEntity = {
     // check entity is not nul
     if (ent == null)
       throw new IllegalArgumentException("the entity cannot be null")
@@ -23,7 +23,7 @@ object define {
 
 object create {
 
-  def <=(ent: GamelEntity): GamelEntity = {
+  def a(ent: GamelEntity): GamelEntity = {
     // check if the entity is null
     if (ent == null)
       throw new IllegalArgumentException("the entity cannot be null")
@@ -35,7 +35,7 @@ object create {
     ent
   }
 
-  def <=(sce: GamelScene): GamelScene = {
+  def a(sce: GamelScene): GamelScene = {
     // check if the scene is null
     if (sce == null)
       throw new IllegalArgumentException("the scene cannot be null")
@@ -49,7 +49,7 @@ object create {
     sce
   }
 
-  def <=(game: GamelGame): GamelGame = {
+  def a(game: GamelGame): GamelGame = {
     // check if the game is null
     if (game == null)
       throw new IllegalArgumentException("the game cannot be null")

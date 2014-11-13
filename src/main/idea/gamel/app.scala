@@ -20,4 +20,7 @@ abstract class GamelApp extends App {
     return null
   }
 
+  def start(): Unit = {
+    gamel.start()
+  }
 }
