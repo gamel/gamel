@@ -37,7 +37,7 @@ object CoolGamel extends GamelApp {
     name = 'Player
     attributes += ( 
       "description" -> "player of the game",
-      "name"        -> "Tianyu"
+      "name"        -> "Tianyu",
       "position"    -> (0, 0),
       "hp"          -> 100,
       "sp"          -> 100
@@ -49,13 +49,13 @@ object CoolGamel extends GamelApp {
 
   create <= new scene {
     name = 'start
-    attributes = (("description", "this is the starting scene"))
+    attributes += (("description", "this is the starting scene"))
     renderer = SceneRenderer.drawStartScene
   }
 
   create <= new scene {
     name = 'room1
-    attributes = ("description" -> "this is the first room")
+    attributes += ("description" -> "this is the first room")
   }
 
   create <= new scene {
@@ -65,7 +65,7 @@ object CoolGamel extends GamelApp {
 
   create <= new scene {
     name = 'end
-    attributes = ("description" -> "this is the ending room")
+    attributes += ("description" -> "this is the ending scene")
   }
 
   create <= new game {
@@ -73,7 +73,7 @@ object CoolGamel extends GamelApp {
     description = "Hey, World! How are you? Hello World Advanture is a demo of GAMEL"
     windowSize = (800, 600)
     startScene = 'start
-    fulllscreen = false
+    fullscreen = false
   }
 
   gamel.start()
