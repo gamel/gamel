@@ -1,8 +1,11 @@
 package idea.gamel
 
+import java.awt.GraphicsDevice
+import java.awt.GraphicsEnvironment
+import java.awt.GraphicsConfiguration
 import scala.swing._
-import scala.swing.BorderPanel.Position._
 import scala.swing.event._
+import scala.swing.BorderPanel.Position._
 import scala.collection.mutable.{Map, HashMap}
 
 /**
@@ -10,22 +13,34 @@ import scala.collection.mutable.{Map, HashMap}
  * This is the window class that prepare such 
  * stuff.
  * */
-class GamelWindow(t: String, w: Int, h: Int) extends SimpleSwingApplication {
+class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApplication {
 
   // basic attributes of a window
   var title: String = t
   var width: Int = w
   var height: Int = h
+  var fullscreen: Boolean = fs
   var menubar: Boolean = true
   var canvas: GamelCanvas = null
+  // screen settings
+  var graphicsEnvironment: GraphicsEnvironment = null
+  var graphicsDevice: GraphicsDevice = null
+  var graphicsConfiguration: GraphicsConfiguration = null
 
   /**
    * create a window with canvas
    * */
   def top = new MainFrame {
+    // currently does not support fullscreen
+    // set up graphics device
+    graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment()
+    graphicsDevice = graphicsEnvironment.getDefaultScreenDevice()
+    graphicsConfiguration = graphicsDevice.getDefaultConfiguration()
+
     // basic attributes
     title = this.title
     size = new Dimension(width, height)
+    centerOnScreen()
 
     // using menubar?
     if (menubar) {
@@ -55,15 +70,63 @@ class GamelWindow(t: String, w: Int, h: Int) extends SimpleSwingApplication {
 
     // listeners
     listenTo(canvas.mouse.clicks)
-    // listenTo(canvas.keys)
+    listenTo(canvas.mouse.wheel)
+    listenTo(canvas.mouse.moves)
+    listenTo(canvas.keys)
 
     // hooks
-    reactions += {
-      // case UIElementResized(elem)   => println("I was resized!" + elem)    // resizez
-      case ButtonClicked(component) => println("button clicked!")
-      case MouseClicked(_, point, _, _, _) => println("mouse clicked at " + point)
-      // case KeyPressed(_, key, _, _) => println("key press at " + key)
+    global.listeners foreach {
+      entry => {
+        if (entry._2)       // if the listener is enabled
+          entry._1 match {
+            case "KeyTyped"            => 
+              reactions += { 
+                case KeyTyped(source: Component, char: Char, modifiers: Int, location: Key.Location.Value) => 
+                  gamel.keyboard ! (entry._1, source, char, modifiers, location)
+              }
+            case "KeyPressed"          => 
+              reactions += { 
+                case KeyPressed(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => 
+                  gamel.keyboard ! (entry._1, source, key, modifiers, location)
+              }
+            case "KeyReleased"         =>
+              reactions += { 
+                case KeyReleased(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => 
+                  gamel.keyboard ! (entry._1, source, key, modifiers, location)
+              }
+            case "MouseClicked"        =>  
+              reactions += { 
+                case MouseClicked(source: Component, point: Point, modifiers: Int, clicks: Int, _) => 
+                  gamel.mouse ! (entry._1, source, point, modifiers, clicks) 
+              }
+            case "MouseButtonEvent"    => {}
+            case "MouseDragged"        => {} 
+            case "MouseEntered"        => {} 
+            case "MouseMotionEvent"    => {} 
+            case "MouseMoved"          => {} 
+            case "MousePressed"        => {} 
+            case "MouseReleased"       => {} 
+            case "MouseWheelMoved"     => {} 
+          }
+      }
     }
+
+    // listener for window events
+    peer.addComponentListener(new java.awt.event.ComponentListener {
+      def componentHidden(e: java.awt.event.ComponentEvent) {
+        println("I'm hidden")
+      }
+      def componentShown(e: java.awt.event.ComponentEvent) {
+        println("I'm shown")
+      }
+      def componentMoved(e: java.awt.event.ComponentEvent) {
+        println("I'm moved")
+      }
+      def componentResized(e: java.awt.event.ComponentEvent) { 
+        println("I'm resized")
+        // publish(WindowResized(outer)) 
+      }
+    })
 
     // periodic repainting
     canvas.start()

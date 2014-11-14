@@ -16,7 +16,7 @@ object SceneRenderer {
   }
 
   def drawStartScene(g2d: Graphics2D): Unit = {
-    var size = global.game.windowSize
+    var size = global.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
@@ -32,6 +32,11 @@ object CoolGamel extends GamelApp {
   println("Hi! Welcome to IDEA GAMEL!")
 
   SceneRenderer.init()
+
+  turn KeyTyped on
+  turn KeyPressed on
+  turn KeyReleased on
+  turn MouseClicked on
 
   define a new entity {
     name = 'Player
@@ -71,11 +76,11 @@ object CoolGamel extends GamelApp {
   create a new game {
     name = "Hello World Advanture"
     description = "Hey, World! How are you? Hello World Advanture is a demo of GAMEL"
-    windowSize = (800, 600)
+    resolution  = (800, 600)
     startScene = 'start
     fullscreen = false
   }
 
-  start
+  start game
 
 }

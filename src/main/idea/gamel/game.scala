@@ -8,7 +8,7 @@ abstract class GamelGame {
 
   var description: String = null
 
-  var windowSize: (Int, Int) = null
+  var resolution: (Int, Int) = null
 
   var startScene: GamelScene = null
 
