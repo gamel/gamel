@@ -1,10 +1,17 @@
 package idea.gamel
 
+import akka.actor.ActorSystem
+import akka.actor.Props
+
 import scala.collection.mutable.{Map, HashMap}
 
 object gamel {
 
-  private var window: GamelWindow = null;
+  var window: GamelWindow = null;
+  val system: ActorSystem = ActorSystem("GamelSystem")
+  val keyboard = system.actorOf(Props[KeyMessageActor], name = "keyActor")
+  val mouse    = system.actorOf(Props[MouseMessageActor], name = "mouseActor")
+  val console  = system.actorOf(Props[ConsoleMessageActor], name = "consoleActor")
 
   def start(): Unit = { 
     
@@ -17,11 +24,14 @@ object gamel {
     // set up the back-end
     global.game.currentScene = global.game.startScene
 
-    var size = global.game.windowSize
+    var size = global.game.resolution
 
     // start the front-end
-    window = new GamelWindow(global.game.name, size._1, size._2)
+    window = new GamelWindow(global.game.name, size._1, size._2, global.game.fullscreen)
     window.startup(Array[String]())
+
+    // Debugger functionality
+    console ! ("tianyu", "Starting game")
   }
   
 

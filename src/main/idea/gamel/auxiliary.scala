@@ -2,17 +2,27 @@ package idea.gamel
 
 /**
  * Gamel Auxiliary Object
- * This is a trait for helper 
- * objects for the game
- * e.g. A Scene Renderer needs to load image, 
- * sound resources before actually starting 
- * the game
  * 
- * Currently GamelAuxiliary will only be called
- * when we want to initialize something
+ * This is a collection of all gamel
+ * auxiliary objects, including the
+ * resource object, logic object, etc
  * */
-trait GamelAuxiliary {
 
-  def init()
-
-}
+/**
+ * GamelResource is used for resources
+ * initialization, for example, loading
+ * image, music, etc
+ * */
+// trait GamelResource {
+//   def init()
+// }
+//
+//
+// trait GamelRenderer {
+//
+//   // require some resources
+//   def require()
+//
+//   def render()
+//
+// }

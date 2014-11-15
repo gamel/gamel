@@ -19,8 +19,9 @@ libraryDependencies ++= Seq(
 
 initialCommands in console := """println("GAMEL Project by Tianyu Cheng, Mark Mansi and Benjamin Lin!!!")"""
 
-scalacOptions += "-deprecation"
-
-scalacOptions += "-feature"
-
-scalacOptions += "-language:implicitConversions"
+scalacOptions ++= Seq(
+        "-deprecation",
+        "-feature",
+        "-language:implicitConversions",
+        "-language:postfixOps"
+        )

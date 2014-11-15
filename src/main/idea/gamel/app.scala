@@ -8,6 +8,10 @@ import scala.collection.mutable.{Map, HashMap}
  * */
 abstract class GamelApp extends App {
 
+  // on/off for alias of true/false
+  val on = true
+  val off = false
+
   implicit def symbolToEntity(s: Symbol): GamelEntity = {
     if (global.entities contains s)
       return global.entities(s)
@@ -20,7 +24,4 @@ abstract class GamelApp extends App {
     return null
   }
 
-  def start(): Unit = {
-    gamel.start()
-  }
 }
