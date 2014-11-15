@@ -2,21 +2,29 @@ package idea.gamel
 
 class GamelInstance extends GamelEntity {
   var entityType: Symbol = null
-  def of(entType: entity) {
-    if(entity == null)
+
+  def of(entType: Symbol): Unit = {
+    if(entType == null)
       throw new CreationException("entity type cannot be null");
-    if(entity.name == null)
-      throw new CreationException("entity type name cannot be null");
-    if(!(global.prototypes contains entity.name))
+    if(!(global.prototypes contains entType))
       throw new CreationException("entity type is not defined");
 
-    entityType = entType.name
-    attributes = entType.attributes
-    renderer = entType.renderer
-    actions = entType.actions
-    parent = entType.parent
-    children = entType.children
+    val ent = global.prototypes(entType)
+
+    entityType = entType
+    attributes = ent.attributes
+    renderer = ent.renderer
+    actions = ent.actions
+    parent = ent.parent
+    children = ent.children
   }
 }
 
-class instance extends GamelEntity { }
+/**
+ * This is a syntactic sugar for client
+ * code to be able to write
+ *
+ *    create a new instance ...
+ *
+ * */
+class instance extends GamelInstance { }

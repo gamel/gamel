@@ -10,10 +10,10 @@ object global {
   var game: GamelGame = null;
 
   // prototypes store all entity types created by "define"
-  val prototypes = new HashMap[Symbol, GamelEntity]
+  val prototypes = new HashMap[Symbol, GamelType]
 
   // entities store all entity created by "created"
-  val entities = new HashMap[Symbol, GamelEntity]
+  val entities = new HashMap[Symbol, GamelInstance]
 
   // scenes store all scenes created by "scene"
   val scenes = new HashMap[Symbol, GamelScene]

@@ -79,9 +79,14 @@ abstract class GamelEntity extends Drawable {
 
 }
 
+// So that the user cannot instantiate a scene as an entity type
+class GamelType extends GamelEntity {}
+
 /**
  * This is a syntactic sugar for client
  * code to be able to write
- *  create new entity ...
+ *
+ *    create a new entity ...
+ *
  * */
-class entity extends GamelEntity { }
+class entity extends GamelType { }

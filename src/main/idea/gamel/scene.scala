@@ -12,7 +12,7 @@ abstract class GamelScene extends GamelEntity {
 
   /**
    * Every child class of Entity will want to
-   * override this method if it hopes to 
+   * override this method if it hopes to
    * actually render some stuff on the screen
    * */
   override def draw(g: Graphics2D): Unit = {
@@ -25,6 +25,8 @@ abstract class GamelScene extends GamelEntity {
 /**
  * This is a syntactic sugar for client
  * code to be able to write
- *  create new scene ...
+ *
+ *    create a new scene ...
+ *
  * */
 class scene extends GamelScene { }

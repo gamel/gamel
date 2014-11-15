@@ -11,7 +11,7 @@ import scala.collection.mutable.{Map, HashMap}
  * */
 object define {
 
-  def a(ent: GamelEntity): GamelEntity = {
+  def a(ent: GamelType): GamelType = {
     // check entity is not nul
     if (ent == null)
       throw new DefinitionException("the entity cannot be null")
@@ -37,7 +37,7 @@ object define {
  * */
 object create {
 
-  def a(ent: GamelEntity): GamelEntity = {
+  def a(ent: GamelInstance): GamelInstance = {
     // check if the entity is null
     if (ent == null)
       throw new CreationException("the entity cannot be null")
@@ -46,6 +46,7 @@ object create {
     if (global.entities contains ent.name)
       throw new CreationException("the entne " + ent.name + " has already been defined!")
 
+    // save the instance to the global scope
     global.entities(ent.name) = ent
     ent
   }
@@ -69,7 +70,7 @@ object create {
     if (game == null)
       throw new CreationException("the game cannot be null")
 
-    // check if game has already been created 
+    // check if game has already been created
     if (global.game != null)
       throw new CreationException("the game has already been created")
 
@@ -80,7 +81,7 @@ object create {
     // check if the game know where to start
     if (game.startScene == null)
       throw new CreationException("the game does not know where to start (aka. the game needs a starting scene)")
-    
+
     // save the game to global scope
     global.game = game
     game
@@ -89,14 +90,14 @@ object create {
 }
 
 /**
- * 'create' configures the status of 
+ * 'create' configures the status of
  * the game
  * e.g.
  *  create a new game {
  *    ...
  *  }
  * */
-object start { 
+object start {
 
   def game(): Unit = {
     gamel.start()
