@@ -15,13 +15,13 @@ abstract class GamelEntity extends Drawable {
 
   // container for all kinds of stuff
   var attributes = new HashMap[String, Any]
- 
+
   // entity's renderer
   var renderer: (Graphics2D) => Unit = null
 
   // entity's action
   var actions = new HashMap[String, GamelAction]
-  
+
   // entity's parent
   var parent: GamelEntity = null
 
@@ -29,7 +29,7 @@ abstract class GamelEntity extends Drawable {
   var children = new HashMap[Symbol, GamelEntity]
 
   /**
-   * Create the flexibility that the user 
+   * Create the flexibility that the user
    * could put anything in the attributes
    * @param attribute String
    * @param description Any
@@ -37,13 +37,13 @@ abstract class GamelEntity extends Drawable {
    * */
   def addAttrib(attribute: String, description: Any): Unit = {
     if (attribute == null || description == null)
-      throw new IllegalArgumentException("attribute or its name cannot be null")
+      throw new DefinitionException("attribute or its name cannot be null")
     attributes(attribute) = description
   }
 
   def addAction(name: String, action: GamelAction): Unit = {
     if (name == null || action == null)
-      throw new IllegalArgumentException("action or its name cannot be null")
+      throw new DefinitionException("action or its name cannot be null")
     // put action into actions map
     actions(name) = action
   }
@@ -57,7 +57,7 @@ abstract class GamelEntity extends Drawable {
 
   /**
    * Every child class of Entity will want to
-   * OVERRIDE this method if it hopes to 
+   * OVERRIDE this method if it hopes to
    * actually render some stuff on the screen
    * @param g Graphics2D
    * @return Unit

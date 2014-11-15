@@ -19,7 +19,7 @@ object SceneRenderer {
     var size = global.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
-    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48)); 
+    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
     g2d.setColor(Color.WHITE)
     g2d.drawString("Hello World Advanture", 20, 50)
     g2d.drawString("This is the starting scene", 20, 120)
@@ -41,9 +41,8 @@ object CoolGamel extends GamelApp {
 
   define a new entity {
     name = 'Player
-    attributes += ( 
+    attributes += (
       "description" -> "player of the game",
-      "name"        -> "Tianyu",
       "position"    -> (0, 0),
       "hp"          -> 100,
       "sp"          -> 100
@@ -55,7 +54,7 @@ object CoolGamel extends GamelApp {
 
   create a new scene {
     name = 'start
-    attributes += (("description", "this is the starting scene"))
+    attributes += ("description" -> "this is the starting scene")
     renderer = SceneRenderer.drawStartScene
   }
 
@@ -80,6 +79,16 @@ object CoolGamel extends GamelApp {
     resolution  = (800, 600)
     startScene = 'start
     fullscreen = false
+  }
+
+  create a new instance {
+    of('Player)
+    name = 'tianyu
+    attributes += (
+      "name"        -> "Tianyu",
+      "position"    -> (100,203),
+      "shirtcolor"  -> "blue"
+    )
   }
 
   start game
