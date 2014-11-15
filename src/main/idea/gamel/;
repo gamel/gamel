@@ -55,27 +55,6 @@ class MouseMessageActor extends MessageActor {
     case ("MouseWheelMoved", source: Component, point: Point, modifiers: Int, rotation: Int) => {
       println("mouse wheel moved!")
     }
-    case ("MouseButtonEvent")    => {
-      println("mouse button event")
-    }
-    case ("MouseDragged", source: Component, point: java.awt.Point, modifiers: Modifiers) => {
-      println("mouse draged")
-    }
-    case ("MouseEntered", source: Component, point: java.awt.Point, modifiers: Modifiers) => {
-      println("mouse entered")
-    }
-    case ("MouseMotionEvent")    => {
-      println("moused motion")
-    }
-    case ("MouseMoved", source: Component, point: java.awt.Point, modifiers: Modifiers) => {
-      println("mouse moved")
-    }
-    case ("MousePressed", source: Component, point: java.awt.Point, modifiers: Modifiers, clicks: Int) => {
-      println("mouse pressed")
-    }
-    case ("MouseReleased", source: Component, point: java.awt.Point, modifiers: Modifiers, clicks: Int) => {
-      println("mouse released")
-    }
     case _ => {
       Console.err.println("huh? are you sure you are sending the correct message to mouse listener?")
     }

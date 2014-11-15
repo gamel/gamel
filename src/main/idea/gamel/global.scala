@@ -18,6 +18,9 @@ object global {
   // scenes store all scenes created by "scene"
   val scenes = new HashMap[Symbol, GamelScene]
 
+  // game resources
+  val resources = new HashMap[String, GamelResource]
+
   // game front-end functionality support
   val listeners = HashMap[String, Boolean] (
     "KeyTyped"            -> false,
