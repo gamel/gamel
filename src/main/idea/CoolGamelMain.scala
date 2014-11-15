@@ -4,18 +4,15 @@ import scala.swing._
 import java.io.File
 import java.awt.Font
 import java.awt.Color
+import java.awt.Image
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
-object SceneRenderer {
+object SceneRenderer extends GamelRenderer {
 
-  var scene: BufferedImage = null
+  val scene = use image "startBackground"
 
-  def init(): Unit = {
-    scene = ImageIO.read(new File("res/scene.jpg"));
-  }
-
-  def drawStartScene(g2d: Graphics2D): Unit = {
+  def render(g2d: Graphics2D): Unit = {
     var size = global.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
@@ -31,13 +28,13 @@ object CoolGamel extends GamelApp {
 
   println("Hi! Welcome to IDEA GAMEL!")
 
-  SceneRenderer.init()
-
   turn KeyTyped on
   turn KeyPressed on
   turn KeyReleased on
   turn MouseClicked on
   turn MouseWheelMoved on
+
+  require image "res/scene.jpg" as "startBackground"
 
   define a new entity {
     name = 'Player
@@ -48,15 +45,15 @@ object CoolGamel extends GamelApp {
       "hp"          -> 100,
       "sp"          -> 100
     )
-    renderer = (g2d: Graphics2D) => {
-      println("painting Player")
-    }
+    // renderer = (g2d: Graphics2D) => {
+    //   println("painting Player")
+    // }
   }
 
   create a new scene {
     name = 'start
     attributes += (("description", "this is the starting scene"))
-    renderer = SceneRenderer.drawStartScene
+    renderer = SceneRenderer
   }
 
   create a new scene {
@@ -77,7 +74,7 @@ object CoolGamel extends GamelApp {
   create a new game {
     name = "Hello World Advanture"
     description = "Hey, World! How are you? Hello World Advanture is a demo of GAMEL"
-    resolution  = (800, 600)
+    resolution  = (1024, 768)
     startScene = 'start
     fullscreen = false
   }

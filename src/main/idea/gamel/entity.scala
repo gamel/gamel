@@ -17,7 +17,7 @@ abstract class GamelEntity extends Drawable {
   var attributes = new HashMap[String, Any]
  
   // entity's renderer
-  var renderer: (Graphics2D) => Unit = null
+  var renderer: GamelRenderer = null
 
   // entity's action
   var actions = new HashMap[String, GamelAction]
@@ -64,7 +64,7 @@ abstract class GamelEntity extends Drawable {
    * */
   def draw(g: Graphics2D): Unit = {
     if (renderer == null) return
-    renderer(g)
+    renderer.render(g)
   }
 
   /**

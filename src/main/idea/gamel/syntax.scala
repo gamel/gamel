@@ -1,5 +1,6 @@
 package idea.gamel
 
+import java.awt.Image
 import scala.collection.mutable.{Map, HashMap}
 
 /**
@@ -87,18 +88,35 @@ object create {
 
 }
 
-/**
- * 'create' configures the status of 
- * the game
- * e.g.
- *  create a new game {
- *    ...
- *  }
- * */
 object start { 
-
   def game(): Unit = {
     gamel.start()
+  }
+}
+
+object require {
+  
+  def image(uri: String): GamelImage = new GamelImage(uri)
+
+  // possibly we can use sound, etc
+}
+
+object use {
+
+  def image(name: String): Image = {
+    if (global.resources contains name) {
+      val res = global.resources(name)
+      val img = res.asInstanceOf[GamelImage]
+      if (res == img) {
+        return res.resource.asInstanceOf[Image]
+      }
+      else {
+        throw new IllegalStateException(name + " is not an imager!")
+      }
+    }
+    else {
+        throw new IllegalStateException(name + " has not been found in resources!")
+    }
   }
 
 }

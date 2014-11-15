@@ -10,10 +10,7 @@ class GamelCanvas extends Panel with Runnable {
   
   // double buffer
   var offscreen: BufferedImage = null
-
-  // temporary variable for testing
-  var x = 0
-  var y = 500
+  var running: Boolean = false
 
   override def run(): Unit = {
     // calculate and check the interval
@@ -34,7 +31,16 @@ class GamelCanvas extends Panel with Runnable {
    * an API for others to start repainting
    * */
   def start() {
+    running = true
     new Thread(this).start()
+  }
+
+  def pause() {
+    running = false
+  }
+
+  def resume() {
+    running = true
   }
 
   /**
@@ -50,16 +56,9 @@ class GamelCanvas extends Panel with Runnable {
     clearBackground(g2d)
 
     drawScene(g2d) 
-
-    // draw a rectangle to show animation
-    g2d.setColor(Color.WHITE)
-    g2d.fillRect(x, y, 50, 50)
-    g2d.dispose()
+    drawEntities(g2d)
 
     g.drawImage(offscreen, 0, 0, size.width, size.height, null)
-
-    x += 5
-    if (x + 50 >= size.width) { x = 0 }
   }
   
   def clearBackground(g2d: Graphics2D): Unit = {
@@ -76,7 +75,11 @@ class GamelCanvas extends Panel with Runnable {
     // if the scene does not have a render method, skip it
     if (scene.renderer == null) return
 
-    scene.renderer(g2d)
+    scene.draw(g2d)
+  }
+
+  def drawEntities(g2d: Graphics2D): Unit = {
+    // var scene = global.game.currentScene
   }
 
 }

@@ -22,7 +22,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
   var fullscreen: Boolean = fs
   var menubar: Boolean = true
   var canvas: GamelCanvas = null
-  // screen settings
+  // screen settings, not supporting fullscreen
   var graphicsEnvironment: GraphicsEnvironment = null
   var graphicsDevice: GraphicsDevice = null
   var graphicsConfiguration: GraphicsConfiguration = null
@@ -133,6 +133,11 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
         // publish(WindowResized(outer)) 
       }
     })
+
+    override def closeOperation() {
+      dispose()
+      gamel.gameMsg ! "exit"
+    }
 
     // periodic repainting
     canvas.start()
