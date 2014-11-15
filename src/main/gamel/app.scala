@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
@@ -13,18 +13,28 @@ abstract class GamelApp extends App {
   val on = true
   val off = false
 
-  implicit def symbolToEntity(s: Symbol): GamelEntity = {
+  implicit def symbolToEntity(s: Symbol): GamelInstance = {
     if (global.entities contains s)
       return global.entities(s)
-    // throw new InstanceNotFoundException("The entity " + s + " has not been foundr!")
-    return null
+    throw new UndefinedInstanceException("the instance " + s + " is undefined");
+  }
+
+  implicit def symbolToTupleEntity(s: Symbol): (Symbol, GamelInstance) = {
+    if (global.entities contains s)
+      return (s, global.entities(s))
+    return (s, null)
   }
 
   implicit def symbolToScene(s: Symbol): GamelScene = {
     if (global.scenes contains s)
       return global.scenes(s)
-    // throw new InstanceNotFoundException("The scene " + s + " has not been foundr!")
     return null
+  }
+
+  implicit def symbolToTupleAction(s: Symbol): (Symbol, GamelAction) = {
+    if(global.actions contains s)
+      return Tuple2 (s, global.actions(s))
+    return (s, null)
   }
 
   // implicit def lambdaToRenderer(func: (Graphics2D => Unit)): GamelRenderer = {

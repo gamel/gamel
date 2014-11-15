@@ -36,6 +36,16 @@ object CoolGamel extends GamelApp {
 
   require image "res/scene.jpg" as "startBackground"
 
+  define a new action {
+    name = 'fall
+    action = (l: List[Any]) => println("ouch")
+  }
+
+  define a new action {
+    name = 'stand
+    action = (l: List[Any]) => println("I'm ok... :)")
+  }
+
   define a new entity {
     name = 'Player
     attributes += (
@@ -43,6 +53,11 @@ object CoolGamel extends GamelApp {
       "position"    -> (0, 0),
       "hp"          -> 100,
       "sp"          -> 100
+    )
+    actions += (
+      'fall,
+      'stand,
+      'say
     )
     // renderer = (g2d: Graphics2D) => {
     //   println("painting Player")
@@ -85,6 +100,16 @@ object CoolGamel extends GamelApp {
       "name"        -> "Tianyu",
       "position"    -> (100,203),
       "shirtcolor"  -> "blue"
+    )
+  }
+
+  create a new instance {
+    of('Player)
+    name = 'mark
+    attributes += (
+      "name"        -> "Mark",
+      "position"    -> (203,100),
+      "shirtcolor"  -> "red"
     )
   }
 

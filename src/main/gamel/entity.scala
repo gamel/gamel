@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
@@ -20,13 +20,13 @@ abstract class GamelEntity extends Drawable {
   var renderer: GamelRenderer = null
 
   // entity's action
-  var actions = new HashMap[String, GamelAction]
+  var actions = new HashMap[Symbol, GamelAction]
 
   // entity's parent
-  var parent: GamelEntity = null
+  // var parent: GamelEntity = null
 
   // entity's children
-  var children = new HashMap[Symbol, GamelEntity]
+  var objects = new HashMap[Symbol, GamelInstance]
 
   /**
    * Create the flexibility that the user
@@ -41,12 +41,6 @@ abstract class GamelEntity extends Drawable {
     attributes(attribute) = description
   }
 
-  def addAction(name: String, action: GamelAction): Unit = {
-    if (name == null || action == null)
-      throw new DefinitionException("action or its name cannot be null")
-    // put action into actions map
-    actions(name) = action
-  }
   /**
    * Semantics for getting attributes from
    * the attributes - HashMap

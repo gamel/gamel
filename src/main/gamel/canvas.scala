@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import java.awt.Color
 import java.awt.image.BufferedImage  

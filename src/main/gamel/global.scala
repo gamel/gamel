@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import scala.collection.mutable.{Map, HashMap}
 
@@ -17,6 +17,9 @@ object global {
 
   // scenes store all scenes created by "scene"
   val scenes = new HashMap[Symbol, GamelScene]
+
+  // all defined actions
+  val actions = new HashMap[Symbol, GamelAction]
 
   // game resources
   val resources = new HashMap[String, GamelResource]

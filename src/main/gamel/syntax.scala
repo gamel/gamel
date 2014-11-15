@@ -27,6 +27,20 @@ object define {
     ent
   }
 
+  def a(action: GamelAction): GamelAction = {
+    if (action == null)
+      throw new DefinitionException("the action cannot be null") 
+    if (action.name == null)
+      throw new DefinitionException("the action name cannot be null")
+    if (action.action == null)
+      throw new DefinitionException("the aciton function cannot be null")
+    if (global.actions contains action.name)
+      throw new DefinitionException("the action " + action.name + " has already been defined!")
+
+    global.actions(action.name) = action
+    action
+  }
+
 }
 
 /**

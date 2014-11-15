@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import java.io.File
 import java.awt.Image
