@@ -37,6 +37,7 @@ object CoolGamel extends GamelApp {
   turn KeyPressed on
   turn KeyReleased on
   turn MouseClicked on
+  turn MouseWheelMoved on
 
   define a new entity {
     name = 'Player

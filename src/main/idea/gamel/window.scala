@@ -67,6 +67,8 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
 
     // window show up in the center
     peer.setLocationRelativeTo(null)
+    // enable key press
+    canvas.requestFocusInWindow()
 
     // listeners
     listenTo(canvas.mouse.clicks)
@@ -106,7 +108,11 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
             case "MouseMoved"          => {} 
             case "MousePressed"        => {} 
             case "MouseReleased"       => {} 
-            case "MouseWheelMoved"     => {} 
+            case "MouseWheelMoved"     => 
+              reactions += { 
+                case MouseWheelMoved(source: Component, point: Point, modifiers: Int, rotation: Int) => 
+                  gamel.mouse ! (entry._1, source, point, modifiers, rotation) 
+              }
           }
       }
     }

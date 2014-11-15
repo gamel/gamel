@@ -52,6 +52,9 @@ class MouseMessageActor extends MessageActor {
       // dynamicall add user define actions here
       // usually the mouse action is defined by the scene
     }
+    case ("MouseWheelMoved", source: Component, point: Point, modifiers: Int, rotation: Int) => {
+      println("mouse wheel moved!")
+    }
     case _ => {
       Console.err.println("huh? are you sure you are sending the correct message to mouse listener?")
     }
