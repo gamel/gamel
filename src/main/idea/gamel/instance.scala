@@ -15,8 +15,8 @@ abstract class GamelInstance extends GamelEntity {
     attributes = ent.attributes
     renderer = ent.renderer
     actions = ent.actions
-    parent = ent.parent
-    children = ent.children
+    //parent = ent.parent
+    objects = ent.objects
   }
 }
 
