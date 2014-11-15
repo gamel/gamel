@@ -13,17 +13,23 @@ abstract class GamelApp extends App {
   val on = true
   val off = false
 
-  implicit def symbolToEntity(s: Symbol): GamelEntity = {
-    if (global.entities contains s)
-      return global.entities(s)
-    // throw new InstanceNotFoundException("The entity " + s + " has not been foundr!")
-    return null
-  }
+  //implicit def symbolToEntity(s: Symbol): GamelType = {
+  //  if (global.entities contains s)
+  //    return global.entities(s)
+  //  // throw new InstanceNotFoundException("The entity " + s + " has not been foundr!")
+  //  return null
+  //}
 
   implicit def symbolToScene(s: Symbol): GamelScene = {
     if (global.scenes contains s)
       return global.scenes(s)
     // throw new InstanceNotFoundException("The scene " + s + " has not been foundr!")
+    return null
+  }
+
+  implicit def symbolToAction(s: Symbol): GamelAction = {
+    if(global.actions contains s)
+      return global.actions(s)
     return null
   }
 

@@ -36,6 +36,11 @@ object CoolGamel extends GamelApp {
 
   require image "res/scene.jpg" as "startBackground"
 
+  define a new action {
+    name = 'fall
+    action = (l: List[Any]) => println("hello")
+  }
+
   define a new entity {
     name = 'Player
     attributes += (

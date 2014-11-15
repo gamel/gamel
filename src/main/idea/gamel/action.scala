@@ -2,13 +2,21 @@ package idea.gamel
 
 import scala.collection.mutable.{Map, HashMap}
 
-class GamelAction(n: Symbol) {
+abstract class GamelAction {
 
   /**
    * return the name of this entity
    * @return Symbol
    * */
-  def name = n
+  var name: Symbol = null
+  
+  var condition: Unit => Boolean = null
+  var action: List[Any] => Unit = null
+  var renderer: GamelRenderer = null
 
-  // MISSING
+  def using (params: Any*): Unit = {
+    action(List(params:_*))
+  }
 }
+
+class action extends GamelAction { }
