@@ -101,39 +101,29 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
                 case MouseClicked(source: Component, point: Point, modifiers: Int, clicks: Int, _) => 
                   gamel.mouse ! (entry._1, source, point, modifiers, clicks) 
               }
-            case "MouseButtonEvent"    => 
-              reactions += {
-                case MouseButtonEvent() =>
-                  gamel.mouse ! (entry._1)
-              }
             case "MouseDragged"        => 
               reactions += {
-                case MouseDragged(source: Component, point: java.awt.Point, modifiers: Modifiers) =>
+                case MouseDragged(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
               }
             case "MouseEntered"        => 
               reactions += {
-                case MouseEntered(source: Component, point: java.awt.Point, modifiers: Modifiers) =>
+                case MouseEntered(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
-              }
-            case "MouseMotionEvent"    => 
-              reactions += {
-                case MouseMotionEvent() =>
-                  gamel.mouse ! (entry._1)
               }
             case "MouseMoved"          => 
               reactions += {
-                case MouseMoved(source: Component, point: java.awt.Point, modifiers: Modifiers) =>
+                case MouseMoved(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
               }
             case "MousePressed"        => 
               reactions += {
-                case MousePressed(source: Component, point: java.awt.Point, modifiers: Modifiers, clicks: Int, _) =>
+                case MousePressed(source: Component, point: java.awt.Point, modifiers: Int, clicks: Int, _) =>
                   gamel.mouse ! (entry._1, source, point, modifiers, clicks)
               }
             case "MouseReleased"       => 
               reactions += {
-                case MouseReleased(source: Component, point: java.awt.Point, modifiers: Modifiers, clicks: Int, _) =>
+                case MouseReleased(source: Component, point: java.awt.Point, modifiers: Int, clicks: Int, _) =>
                   gamel.mouse ! (entry._1, source, point, modifiers, clicks)
               }
             case "MouseWheelMoved"     => 

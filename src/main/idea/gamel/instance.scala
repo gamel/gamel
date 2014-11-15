@@ -1,6 +1,6 @@
 package idea.gamel
 
-class GamelInstance extends GamelEntity {
+abstract class GamelInstance extends GamelEntity {
   var entityType: Symbol = null
 
   def of(entType: Symbol): Unit = {
