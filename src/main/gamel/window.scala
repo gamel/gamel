@@ -14,14 +14,13 @@ import scala.collection.mutable.{Map, HashMap}
  * This is the window class that prepare such 
  * stuff.
  * */
-class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApplication {
+class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApplication with Display {
 
   // basic attributes of a window
   var title: String = t
   var width: Int = w
   var height: Int = h
   var fullscreen: Boolean = fs
-  var menubar: Boolean = true
   var canvas: GamelCanvas = null
   // screen settings, not supporting fullscreen
   var graphicsEnvironment: GraphicsEnvironment = null
@@ -42,19 +41,6 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     title = this.title
     size = new Dimension(width, height)
     centerOnScreen()
-
-    // using menubar?
-    if (menubar) {
-      menuBar = new MenuBar {
-        // adding new menu
-        contents += new Menu("Menu") {
-          // adding new menu item "Exit"
-          contents += new MenuItem(Action("Exit") {
-            sys.exit(0)
-          })
-        }
-      }
-    }
 
     // canvas for drawing game components
     canvas = new GamelCanvas {
@@ -154,11 +140,36 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     })
 
     override def closeOperation() {
-      dispose()
+      println("exit in close operation")
       gamel.gameMsg ! "exit"
+      dispose()
     }
 
   } // end of top
+
+  // support for fullscreen
+  def isFullScreenSupported = false
+
+  // support for listeners
+  def isKeyTypedSupported = true
+  def isKeyPressedSupported = true
+  def isKeyReleasedSupported = true
+  def isMouseClickedSupported = true
+  def isMouseDraggedSupported = true
+  def isMouseEnteredSupported = true
+  def isMouseMovedSupported = true
+  def isMousePressedSupported = true
+  def isMouseReleasedSupported = true
+  def isMouseWheelMovedSupported = true
+
+  // window operation
+  def launch(): Unit = {
+    this.startup(Array[String]())
+  }
+
+  def close(): Unit = {
+    sys.exit()
+  }
 
   def repaint(): Unit = { 
     canvas.repaint()

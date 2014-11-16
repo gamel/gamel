@@ -12,7 +12,7 @@ object SceneRenderer extends GamelRenderer {
 
   val scene = use image "startBackground"
 
-  def render(g2d: Graphics2D): Unit = {
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
     var size = gamel.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
@@ -26,14 +26,18 @@ object SceneRenderer extends GamelRenderer {
 
 object EntityRenderer extends GamelRenderer {
 
-  def render(g2d: Graphics2D): Unit = {
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
+    var pos = (self tell "position").asInstanceOf[Tuple2[Int, Int]]
+    var color = (self tell "shirtcolor").asInstanceOf[Int]
+    var name = (self tell "name").asInstanceOf[String]
+
     var time = gamel.time
     var size = gamel.game.resolution
 
-    gamel.console ! ("tianyu", time)
-    g2d.translate(size._1 / 2, size._2 / 2);
-    g2d.rotate(time);
-    g2d.setColor(Color.WHITE)
+    g2d.translate(pos._1, pos._2 + (Math.sin(time) * 100).toInt);
+    g2d.setColor(new Color(color))
+    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+    g2d.drawString(name, -30, -30)
     g2d.fillRect(-25, -25, 50, 50);
   }
 
@@ -75,16 +79,13 @@ object CoolGamel extends GamelApp {
       'say
     )
     renderer = EntityRenderer
-    // renderer = (g2d: Graphics2D) => {
-    //   println("painting Player")
-    // }
   }
 
   create a new scene {
     name = 'start
     attributes += ("description" -> "this is the starting scene")
     renderer = SceneRenderer
-    objects += 'tianyu
+    objects += ( 'tianyu, 'mark, 'ben )
   }
 
   create a new scene {
@@ -114,8 +115,8 @@ object CoolGamel extends GamelApp {
     name = 'tianyu
     attributes += (
       "name"        -> "Tianyu",
-      "position"    -> (100,203),
-      "shirtcolor"  -> "blue"
+      "position"    -> (500,503),
+      "shirtcolor"  -> 0x00ffff
     )
   } of 'Player
 
@@ -123,11 +124,20 @@ object CoolGamel extends GamelApp {
     name = 'mark
     attributes += (
       "name"        -> "Mark",
-      "position"    -> (203,100),
-      "shirtcolor"  -> "red"
+      "position"    -> (203,300),
+      "shirtcolor"  -> 0xffff00
     )
     objects += (
       'hat
+    )
+  } of 'Player
+
+  create a new instance { 
+    name = 'ben
+    attributes += (
+      "name"        -> "Ben",
+      "position"    -> (303,400),
+      "shirtcolor"  -> 0xff00ff
     )
   } of 'Player
 

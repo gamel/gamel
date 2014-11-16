@@ -119,6 +119,18 @@ object require {
 
 object use {
 
+  def entity(name: Symbol): GamelInstance = {
+    if (name == null)
+      throw new IllegalArgumentException("the entity name to search for could not be null")
+   
+    if (global.entities contains name) {
+      return global.entities(name)
+    }
+    else {
+      throw new UndefinedInstanceException("the entity " + name + " has not been found")
+    }
+  }
+
   def image(name: String): Image = {
     if (global.resources contains name) {
       val res = global.resources(name)
@@ -152,10 +164,8 @@ object turn {
   def KeyReleased      = (status: Boolean) => global.listeners("KeyReleased")        = status
   def KeyPressed       = (status: Boolean) => global.listeners("KeyPressed")         = status
   def MouseClicked     = (status: Boolean) => global.listeners("MouseClicked")       = status
-  def MouseButtonEvent = (status: Boolean) => global.listeners("MouseButtonEvent")   = status
   def MouseDragged     = (status: Boolean) => global.listeners("MouseDragged")       = status
   def MouseEntered     = (status: Boolean) => global.listeners("MouseEntered")       = status
-  def MouseMotionEvent = (status: Boolean) => global.listeners("MouseMotionEvent")   = status
   def MouseMoved       = (status: Boolean) => global.listeners("MouseMoved")         = status
   def MousePressed     = (status: Boolean) => global.listeners("MousePressed")       = status
   def MouseReleased    = (status: Boolean) => global.listeners("MouseReleased")      = status

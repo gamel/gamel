@@ -12,7 +12,7 @@ object gamel {
   var running = true
   var exit    = false
 
-  var window: GamelWindow = null;
+  var window: Display = null;
   val system: ActorSystem = ActorSystem("GamelSystem")
   val keyboard = system.actorOf(Props[KeyMessageActor], name = "keyActor")
   val mouse    = system.actorOf(Props[MouseMessageActor], name = "mouseActor")
@@ -32,10 +32,13 @@ object gamel {
     game.switchToScene(game.startScene)
 
     var size = game.resolution
-
-    // start the front-end
     window = new GamelWindow(game.name, size._1, size._2, game.fullscreen)
-    window.startup(Array[String]())
+
+    // need to check front end support for listeners and fullscreen
+    // MISSING()
+    
+    // start the front-end
+    window launch
 
     // Debugger functionality
     console ! ("tianyu", "Starting game")
@@ -61,6 +64,12 @@ object gamel {
         gamel.time += seconds
       }
     }
+    window.close
+    system stop keyboard
+    system stop mouse
+    system stop console
+    system stop gameMsg
+    system shutdown
   }
 
 }

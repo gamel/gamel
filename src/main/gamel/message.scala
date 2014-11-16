@@ -84,7 +84,7 @@ class GameMessageActor extends MessageActor {
     case "resume"  => { gamel.running = true  }
     case "exit"    => { 
       gamel.exit = true 
-      gamel.window.quit()
+      gamel.window.close()
     }
   }
 }

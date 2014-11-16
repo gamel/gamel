@@ -47,7 +47,14 @@ abstract class GamelEntity extends Drawable {
    * @param attribute String
    * @return description Any
    * */
-  def tell(attribute: String): Any = attributes get attribute
+  def tell(attribute: String): Any = {
+    val attr = attributes get attribute
+    attr match {
+      case None => throw new NullPointerException("the attribute " + attribute + " to find is null")
+      case Some(value) => return value
+    }
+    return null
+  }
 
   /**
    * Every child class of Entity will want to
@@ -58,7 +65,9 @@ abstract class GamelEntity extends Drawable {
    * */
   def draw(g: Graphics2D): Unit = {
     if (renderer == null) return
-    renderer.render(g)
+    val at = g.getTransform();
+    renderer.render(this, g)
+    g.setTransform(at);
   }
 
   /**
