@@ -1,4 +1,4 @@
-import idea.gamel._
+import gamel._
 import scala.swing._
 
 import java.io.File
@@ -111,7 +111,19 @@ object CoolGamel extends GamelApp {
       "position"    -> (203,100),
       "shirtcolor"  -> "red"
     )
+    objects += (
+      'hat
+    )
   }
+
+  create a new instance {
+    name = 'hat
+    attributes += (
+       "name"       -> "chapeau"   
+    )
+  }
+
+  'mark gives 'hat to 'tianyu
 
   start game
 

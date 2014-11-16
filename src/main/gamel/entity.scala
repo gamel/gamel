@@ -23,7 +23,7 @@ abstract class GamelEntity extends Drawable {
   var actions = new HashMap[Symbol, GamelAction]
 
   // entity's parent
-  // var parent: GamelEntity = null
+  protected var parent: GamelEntity = null
 
   // entity's children
   var objects = new HashMap[Symbol, GamelInstance]

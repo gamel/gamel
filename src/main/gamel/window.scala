@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment

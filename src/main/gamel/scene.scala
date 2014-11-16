@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
