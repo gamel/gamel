@@ -144,16 +144,11 @@ If this fails because the transition is not defined for the current scene, the e
 
 Finally, when an entity goes to another scene, everything it owns moves with it.
 
-The `GAMEL` function
+Gamel in Scala
 ------------------
-Gamel provides a construct for embedding gamel code into Scala code. The `GAMEL` function takes a block of gamel code and evaluate it:
+Since gamel code is parsed as valid Scala code, user code can embed gamel code. Simply import the gamel package:
 ```
-object HelloWorld extends App { // normal Scala
-    GAMEL(                      // the GAMEL function
-        define entity Foo ( )   // embedded gamel code
-        ...
-    )
-}
+import gamel._
 ```
 
 List of Language Constructs
