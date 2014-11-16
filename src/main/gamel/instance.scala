@@ -15,11 +15,37 @@ abstract class GamelInstance extends GamelEntity {
     val ent = global.prototypes(entType)
 
     entityType = entType
-    attributes = ent.attributes.clone()
-    renderer = ent.renderer
-    actions = ent.actions.clone()
-    //parent = ent.parent
-    objects = ent.objects.clone()
+
+    if (renderer == null)
+      renderer = ent.renderer
+
+    ent.attributes foreach {
+      entry => {
+        val key = entry._1
+        val value = entry._2
+        if (!(attributes contains key))
+          attributes(key) = value
+      }
+    }
+
+    ent.actions foreach {
+      entry => {
+        val key = entry._1
+        val value = entry._2
+        if (!(actions contains key))
+          actions(key) = value
+      }
+    }
+
+    ent.objects foreach {
+      entry => {
+        val key = entry._1
+        val value = entry._2
+        if (!(objects contains key))
+          objects(key) = value
+      }
+    }
+
   }
 
   def gives(inst: Symbol): GamelInstance = {
@@ -31,8 +57,6 @@ abstract class GamelInstance extends GamelEntity {
 
     if (!(objects contains inst))
       throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
-
-    moving = true
 
     // lazy evaluation
     if(objects(inst) == null) {
@@ -48,6 +72,9 @@ abstract class GamelInstance extends GamelEntity {
     // to get the value out of the option
     val obj = objects(inst)
     objects remove inst
+
+    // set current status of moving
+    obj.moving = true
 
     // set the new parent to this instance,
     // so that if the "gives" fails, we can

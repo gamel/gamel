@@ -34,7 +34,7 @@ object EntityRenderer extends GamelRenderer {
     g2d.translate(size._1 / 2, size._2 / 2);
     g2d.rotate(time);
     g2d.setColor(Color.WHITE)
-    g2d.drawRect(-25, -25, 50, 50);
+    g2d.fillRect(-25, -25, 50, 50);
   }
 
 }
@@ -111,17 +111,15 @@ object CoolGamel extends GamelApp {
   }
 
   create a new instance {
-    of('Player)
     name = 'tianyu
     attributes += (
       "name"        -> "Tianyu",
       "position"    -> (100,203),
       "shirtcolor"  -> "blue"
     )
-  }
+  } of 'Player
 
-  create a new instance {
-    of('Player)
+  create a new instance { 
     name = 'mark
     attributes += (
       "name"        -> "Mark",
@@ -131,7 +129,7 @@ object CoolGamel extends GamelApp {
     objects += (
       'hat
     )
-  }
+  } of 'Player
 
   create a new instance {
     name = 'hat
@@ -140,7 +138,7 @@ object CoolGamel extends GamelApp {
     )
   }
 
-  // 'mark gives 'hat to 'tianyu
+  'mark gives 'hat to 'tianyu
 
   // 'hat to 'tianyu
 
