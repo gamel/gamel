@@ -125,6 +125,8 @@ object CoolGamel extends GamelApp {
 
   'mark gives 'hat to 'tianyu
 
+  'hat to 'tianyu
+
   start game
 
 }

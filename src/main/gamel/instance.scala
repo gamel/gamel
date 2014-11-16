@@ -3,6 +3,9 @@ package gamel
 abstract class GamelInstance extends GamelEntity {
   var entityType: Symbol = null
 
+  // denotes whether this instance is in the process of being moved
+  private var moving = false
+
   def of(entType: Symbol): Unit = {
     if (entType == null)
       throw new CreationException("entity type cannot be null");
@@ -28,6 +31,8 @@ abstract class GamelInstance extends GamelEntity {
 
     if (!(objects contains inst))
       throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
+
+    moving = true
 
     // lazy evaluation
     if(objects(inst) == null) {
@@ -59,17 +64,25 @@ abstract class GamelInstance extends GamelEntity {
     if (newParent == null) {
       // give this object back to its parent before errororing
       parent.objects(name) = this
+      moving = false
       throw new IllegalArgumentException("instance is null")
     }
 
     if (newParent == name){
       parent.objects(name) = this
+      moving = false
       throw new IllegalArgumentException("cannot give entity to itself")
     }
 
     if (!(global.entities contains newParent) && !(global.scenes contains newParent)){
       parent.objects(name) = this
+      moving = false
       throw new UndefinedInstanceException("instance is null")
+    }
+
+    if (!moving) {
+      parent.objects(name) = this
+      throw new IllegalStateException("to without gives")
     }
 
     if(global.entities contains newParent){
@@ -79,6 +92,7 @@ abstract class GamelInstance extends GamelEntity {
     }
 
     parent = null
+    moving = false
   }
 }
 

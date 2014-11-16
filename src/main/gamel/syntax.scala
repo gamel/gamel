@@ -161,3 +161,4 @@ object turn {
   def MouseReleased    = (status: Boolean) => global.listeners("MouseReleased")      = status
   def MouseWheelMoved  = (status: Boolean) => global.listeners("MouseWheelMoved")    = status
 }
+
