@@ -3,6 +3,7 @@ package gamel
 import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment
 import java.awt.GraphicsConfiguration
+import javax.swing.JFrame
 import scala.swing._
 import scala.swing.event._
 import scala.swing.BorderPanel.Position._
@@ -64,6 +65,8 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     contents = new BorderPanel {
       layout(canvas) = Center
     }
+
+    peer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
     // window show up in the center
     peer.setLocationRelativeTo(null)
@@ -138,17 +141,15 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     // listener for window events
     peer.addComponentListener(new java.awt.event.ComponentListener {
       def componentHidden(e: java.awt.event.ComponentEvent) {
-        println("I'm hidden")
+        gamel.gameMsg ! "pause"
       }
       def componentShown(e: java.awt.event.ComponentEvent) {
-        println("I'm shown")
+        gamel.gameMsg ! "resume"
       }
       def componentMoved(e: java.awt.event.ComponentEvent) {
-        println("I'm moved")
       }
       def componentResized(e: java.awt.event.ComponentEvent) { 
         println("I'm resized")
-        // publish(WindowResized(outer)) 
       }
     })
 
@@ -157,8 +158,10 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
       gamel.gameMsg ! "exit"
     }
 
-    // periodic repainting
-    canvas.start()
   } // end of top
+
+  def repaint(): Unit = { 
+    canvas.repaint()
+  }
 
 }

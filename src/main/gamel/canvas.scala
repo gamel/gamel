@@ -6,42 +6,10 @@ import java.awt.image.BufferedImage
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
 
-class GamelCanvas extends Panel with Runnable {
+class GamelCanvas extends Panel {
   
   // double buffer
   var offscreen: BufferedImage = null
-  var running: Boolean = false
-
-  override def run(): Unit = {
-    // calculate and check the interval
-    var interval = (1000.0 / global.game.fps).toInt
-
-    if (interval <= 0) 
-      throw new IllegalStateException("fps is not valid!")
-
-    while (true) {
-      val start = System.currentTimeMillis()
-      repaint()
-      val duration = System.currentTimeMillis() - start
-      if (duration < interval) Thread.sleep(interval - duration)
-    }
-  }
-
-  /**
-   * an API for others to start repainting
-   * */
-  def start() {
-    running = true
-    new Thread(this).start()
-  }
-
-  def pause() {
-    running = false
-  }
-
-  def resume() {
-    running = true
-  }
 
   /**
    * Rendering Function
@@ -49,12 +17,14 @@ class GamelCanvas extends Panel with Runnable {
    * @return Unit
    * */
   override def paintComponent(g: Graphics2D): Unit = {
+
     if (offscreen == null) {
       offscreen = new BufferedImage(size.width, size.height, BufferedImage.TYPE_4BYTE_ABGR)
     }
-    var g2d = offscreen.createGraphics()
-    clearBackground(g2d)
 
+    var g2d = offscreen.createGraphics()
+
+    clearBackground(g2d)
     drawScene(g2d) 
     drawEntities(g2d)
 
@@ -67,11 +37,9 @@ class GamelCanvas extends Panel with Runnable {
   }
 
   def drawScene(g2d: Graphics2D): Unit = {
-    var scene = global.game.currentScene
-
+    var scene = gamel.game.currentScene
     // if there is no scene, skip it
     if (scene == null) return
-
     // if the scene does not have a render method, skip it
     if (scene.renderer == null) return
 
@@ -79,7 +47,13 @@ class GamelCanvas extends Panel with Runnable {
   }
 
   def drawEntities(g2d: Graphics2D): Unit = {
-    // var scene = global.game.currentScene
+    var scene = gamel.game.currentScene
+    scene.objects foreach {
+      entry => {
+        val ent = entry._2
+        ent.draw(g2d)
+      }
+    }
   }
 
 }

@@ -79,9 +79,13 @@ class MouseMessageActor extends MessageActor {
 
 class GameMessageActor extends MessageActor {
   def receive = {
-    case "pause"  => { gamel.running = false }
-    case "resume" => { gamel.running = true  }
-    case "exit"   => { gamel.exit = true }
+    case "repaint" => { gamel.window.repaint() }
+    case "pause"   => { gamel.running = false }
+    case "resume"  => { gamel.running = true  }
+    case "exit"    => { 
+      gamel.exit = true 
+      gamel.window.quit()
+    }
   }
 }
 

@@ -7,7 +7,8 @@ import scala.collection.mutable.{Map, HashMap}
 
 object gamel {
 
-  var time: Long = 0    // game time since game start, created for convinience
+  var game: GamelGame = null    // this is created for convience
+  var time: Long = 0            // game time since game start, created for convinience
   var running = true
   var exit    = false
 
@@ -25,13 +26,15 @@ object gamel {
     if (global.game == null)
       throw new IllegalStateException("The game object has not been created yet!")
 
+    // create the alias for convenience
+    game = global.game
     // set up the back-end
-    global.game.currentScene = global.game.startScene
+    game.switchToScene(game.startScene)
 
-    var size = global.game.resolution
+    var size = game.resolution
 
     // start the front-end
-    window = new GamelWindow(global.game.name, size._1, size._2, global.game.fullscreen)
+    window = new GamelWindow(game.name, size._1, size._2, game.fullscreen)
     window.startup(Array[String]())
 
     // Debugger functionality
@@ -50,10 +53,11 @@ object gamel {
     while (!exit) {
       if (running) {
         val start = System.currentTimeMillis()
+        gameMsg ! "repaint"
+        // do your logic codes here
         val duration = System.currentTimeMillis() - start
-
-        gamel.time += duration
         if (duration < interval) Thread.sleep(interval - duration)
+        gamel.time += interval
       }
     }
   }

@@ -13,13 +13,28 @@ object SceneRenderer extends GamelRenderer {
   val scene = use image "startBackground"
 
   def render(g2d: Graphics2D): Unit = {
-    var size = global.game.resolution
+    var size = gamel.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
     g2d.setColor(Color.WHITE)
     g2d.drawString("Hello World Advanture", 20, 50)
     g2d.drawString("This is the starting scene", 20, 120)
+  }
+
+}
+
+object EntityRenderer extends GamelRenderer {
+
+  def render(g2d: Graphics2D): Unit = {
+    var time = gamel.time
+    var size = gamel.game.resolution
+
+    gamel.console ! ("tianyu", time)
+    g2d.translate(size._1 / 2, size._2 / 2);
+    g2d.rotate(time);
+    g2d.setColor(Color.WHITE)
+    g2d.drawRect(-25, -25, 50, 50);
   }
 
 }
@@ -59,6 +74,7 @@ object CoolGamel extends GamelApp {
       'stand,
       'say
     )
+    renderer = EntityRenderer
     // renderer = (g2d: Graphics2D) => {
     //   println("painting Player")
     // }
@@ -68,6 +84,7 @@ object CoolGamel extends GamelApp {
     name = 'start
     attributes += ("description" -> "this is the starting scene")
     renderer = SceneRenderer
+    objects += 'tianyu
   }
 
   create a new scene {
@@ -123,9 +140,9 @@ object CoolGamel extends GamelApp {
     )
   }
 
-  'mark gives 'hat to 'tianyu
+  // 'mark gives 'hat to 'tianyu
 
-  'hat to 'tianyu
+  // 'hat to 'tianyu
 
   start game
 

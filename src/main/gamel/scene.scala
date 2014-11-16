@@ -5,6 +5,7 @@ import scala.collection.mutable.{Map, HashMap}
 
 abstract class GamelScene extends GamelEntity {
 
+  var loaded = false
   /**
    * FIELDS:
    *  + name - Entity
