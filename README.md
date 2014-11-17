@@ -223,6 +223,12 @@ Run:
   sbt clean
   ```
 
+  To watch for changes and compile in real time
+  ```
+  $ sbt
+    ~ compile
+  ```
+
 
 Nice-to-have features
 ---------------------
