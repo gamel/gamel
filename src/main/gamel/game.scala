@@ -19,14 +19,14 @@ abstract class GamelGame {
   var fullscreen = false       // not supported yet
 
   /**
-   * switchToScene will initialize the scene if 
+   * switchToScene will initialize the scene if
    * this scene has not been initialized
-   * This is due to the fact that GAMEL allows
-   * non-forward-declaration
+   * This is due to the fact that GAMEL does
+   * not require forward declaration
    * */
-  def switchToScene(sce: Symbol): Unit = {  
+  def switchToScene(sce: Symbol): Unit = {
     // sanity check for argument
-    if (sce == null) 
+    if (sce == null)
       throw new IllegalArgumentException("The scene to switch to cannot be null!")
     // sanitity check for existence of this scene
     if (!(global.scenes contains sce))
@@ -38,7 +38,7 @@ abstract class GamelGame {
     // check whether the scene has been initialized because we are doing lazy evaluation
     if (!destScene.loaded) {
       // load the scene and its objects
-      destScene.objects foreach { 
+      destScene.objects foreach {
         entry => {
           var key = entry._1
           val obj = entry._2
@@ -50,7 +50,7 @@ abstract class GamelGame {
               throw new UndefinedInstanceException("instance " + key + " has not been found!")
           }
         }
-      }  
+      }
       // mark the scene as loaded so we don't load this again
       destScene.loaded = true
     }

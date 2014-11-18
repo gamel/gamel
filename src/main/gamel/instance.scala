@@ -59,18 +59,21 @@ abstract class GamelInstance extends GamelEntity {
       throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
 
     // lazy evaluation
-    if(objects(inst) == null) {
-      if (!(global.entities contains inst)) {
-        throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
-      } else {
-        objects(inst) = global.entities(inst)
-      }
+    var obj: GamelInstance = null
+    if(objects(inst) != null){
+      obj = objects(inst)
+    } else if (global.entities contains inst) {
+      obj = global.entities(inst)
+    } else {
+      throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
+    }
+
+    // if the object is already moving, something is wrong
+    if (obj.moving){
+      throw new IllegalStateException(inst + "is already in the process of being given")
     }
 
     // remove the object from this instance
-    // this returns an optional, so we have to use get()
-    // to get the value out of the option
-    val obj = objects(inst)
     objects remove inst
 
     // set current status of moving
@@ -80,8 +83,6 @@ abstract class GamelInstance extends GamelEntity {
     // so that if the "gives" fails, we can
     // give the object back to the parent
     obj.parent = this
-
-    global.entities(name) = this
 
     // return the object
     obj
@@ -112,9 +113,21 @@ abstract class GamelInstance extends GamelEntity {
       throw new IllegalStateException("to without gives")
     }
 
+    // parent and newParent must be either both scenes
+    // or both entities
     if(global.entities contains newParent){
+      if(!(global.entities contains parent)){
+        parent.objects(name) = this
+        moving = false
+        throw new IllegalArgumentException("new parent is not an instance")
+      }
       global.entities(newParent).objects(name) = this
     } else {
+      if(!(global.scenes contains parent)){
+        parent.objects(name) = this
+        moving = false
+        throw new IllegalArgumentException("new parent is not a scene")
+      }
       global.scenes(newParent).objects(name) = this
     }
 
@@ -131,3 +144,16 @@ abstract class GamelInstance extends GamelEntity {
  *
  * */
 class instance extends GamelInstance { }
+
+/**
+ * Defines the nobody instance, which gets implicit
+ * ownership of every newly created, unowned object.
+ *
+ * nobody is an entity, but it does not get a symbolic
+ * name.
+ */
+object nobody extends GamelInstance {
+  override def to(newParent: Symbol): Unit = {
+    throw new IllegalArgumentException("Cannot give nobody");
+  }
+}
