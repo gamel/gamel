@@ -29,7 +29,7 @@ object define {
 
   def a(action: GamelAction): GamelAction = {
     if (action == null)
-      throw new DefinitionException("the action cannot be null") 
+      throw new DefinitionException("the action cannot be null")
     if (action.name == null)
       throw new DefinitionException("the action name cannot be null")
     if (action.action == null)
@@ -111,7 +111,7 @@ object start {
 }
 
 object require {
-  
+
   def image(uri: String): GamelImage = new GamelImage(uri)
 
   // possibly we can use sound, etc
@@ -122,7 +122,7 @@ object use {
   def entity(name: Symbol): GamelInstance = {
     if (name == null)
       throw new IllegalArgumentException("the entity name to search for could not be null")
-   
+
     if (global.entities contains name) {
       return global.entities(name)
     }

@@ -22,9 +22,6 @@ abstract class GamelEntity extends Drawable {
   // entity's action
   var actions = new HashMap[Symbol, GamelAction]
 
-  // entity's parent
-  protected var parent: GamelEntity = null
-
   // entity's children
   var objects = new HashMap[Symbol, GamelInstance]
 
@@ -78,6 +75,49 @@ abstract class GamelEntity extends Drawable {
   def does(action: String): Unit = {
     // trigger action here
     // MISSING()
+  }
+
+  def gives(inst: Symbol): GamelInstance = {
+    if(!(this.isInstanceOf[GamelInstance] || this.isInstanceOf[GamelScene]))
+      throw new UnsupportedOperationException("entity-type cannot give")
+
+    if (inst == null)
+      throw new IllegalArgumentException("instance is null")
+
+    if (inst == name)
+      throw new IllegalArgumentException("cannot give self")
+
+    if (!(objects contains inst))
+      throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
+
+    // lazy evaluation
+    var obj: GamelInstance = null
+    if(objects(inst) != null){
+      obj = objects(inst)
+    } else if (global.entities contains inst) {
+      obj = global.entities(inst)
+    } else {
+      throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
+    }
+
+    // if the object is already moving, something is wrong
+    if (obj.moving){
+      throw new IllegalStateException(inst + "is already in the process of being given")
+    }
+
+    // remove the object from this instance
+    objects remove inst
+
+    // set current status of moving
+    obj.moving = true
+
+    // set the new parent to this instance,
+    // so that if the "gives" fails, we can
+    // give the object back to the parent
+    obj.parent = this
+
+    // return the object
+    obj
   }
 
 }

@@ -18,7 +18,7 @@ object SceneRenderer extends GamelRenderer {
 
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
     g2d.setColor(Color.WHITE)
-    g2d.drawString("Hello World Advanture", 20, 50)
+    g2d.drawString("Hello World Adventure", 20, 50)
     g2d.drawString("This is the starting scene", 20, 120)
   }
 
@@ -120,16 +120,19 @@ object CoolGamel extends GamelApp {
     )
   } of 'Player
 
-  create a new instance { 
+  create a new instance {
     name = 'mark
     attributes += (
       "name"        -> "Mark",
       "position"    -> (203,300),
       "shirtcolor"  -> 0xffff00
     )
+    objects += (
+      'hat
+    )
   } of 'Player
 
-  create a new instance { 
+  create a new instance {
     name = 'ben
     attributes += (
       "name"        -> "Ben",
@@ -141,16 +144,16 @@ object CoolGamel extends GamelApp {
   create a new instance {
     name = 'hat
     attributes += (
-       "name"       -> "chapeau"   
+       "name"       -> "chapeau"
     )
   }
 
-  nobody gives 'hat to 'mark
+//  nobody gives 'hat to 'mark
 
   'mark gives 'hat to 'tianyu
 
   // 'hat to 'tianyu
-  
+
   start game
 
 }
