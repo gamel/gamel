@@ -1,13 +1,13 @@
 package gamel
 
 import java.awt.Color
-import java.awt.image.BufferedImage  
+import java.awt.image.BufferedImage
 
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
 
 class GamelCanvas extends Panel {
-  
+
   // double buffer
   var offscreen: BufferedImage = null
 
@@ -25,12 +25,12 @@ class GamelCanvas extends Panel {
     var g2d = offscreen.createGraphics()
 
     clearBackground(g2d)
-    drawScene(g2d) 
+    drawScene(g2d)
     drawEntities(g2d)
 
     g.drawImage(offscreen, 0, 0, size.width, size.height, null)
   }
-  
+
   def clearBackground(g2d: Graphics2D): Unit = {
     g2d.setColor(Color.BLACK)
     g2d.fillRect(0, 0, size.width, size.height)

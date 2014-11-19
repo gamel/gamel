@@ -68,13 +68,43 @@ abstract class GamelEntity extends Drawable {
   }
 
   /**
+   * Recursively trigger this entity's actions
+   */
+  def triggerActions(): Unit = {
+    actions foreach {
+      a => {
+        if (a._2.condition != null && a._2.condition()) {
+          a._2.action(this :: List())
+        }
+      }
+    }
+    objects foreach {
+      obj => obj._2.triggerActions()
+    }
+  }
+
+  /**
    * entity trigger action by name
    * @param action String
    * @return Unit
    * */
-  def does(action: String): Unit = {
-    // trigger action here
-    // MISSING()
+  def does(action: Symbol): GamelAction = {
+    if (this.isInstanceOf[GamelType]) {
+      throw new UnsupportedOperationException(name + " is not an instance or scene")
+    }
+
+    if (!(actions contains action)) {
+      throw new UndefinedActionException(action + " is not an action of " + name)
+    }
+
+    var act = actions(action)
+
+    if (act == null) {
+      act = global.actions(action)
+      actions(action) = act
+    }
+
+    act
   }
 
   def gives(inst: Symbol): GamelInstance = {

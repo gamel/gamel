@@ -19,10 +19,10 @@ object gamel {
   val console  = system.actorOf(Props[ConsoleMessageActor], name = "consoleActor")
   val gameMsg  = system.actorOf(Props[GameMessageActor], name = "gameActor")
 
-  def start(): Unit = { 
+  def start(): Unit = {
     // in order to start the game,
     // the user must have created
-    // the game object 
+    // the game object
     if (global.game == null)
       throw new IllegalStateException("The game object has not been created yet!")
 
@@ -36,7 +36,7 @@ object gamel {
 
     // need to check front end support for listeners and fullscreen
     // MISSING()
-    
+
     // start the front-end
     window launch
 
@@ -45,7 +45,7 @@ object gamel {
 
     mainLoop
   }
-  
+
   def mainLoop(): Unit = {
     // calculate and check the interval
     val interval = (1000.0 / global.game.fps).toInt
@@ -58,6 +58,10 @@ object gamel {
       if (running) {
         val start = System.currentTimeMillis()
         gameMsg ! "repaint"
+
+        // trigger events
+        game.currentScene.triggerActions()
+
         // do your logic codes here
         val duration = System.currentTimeMillis() - start
         if (duration < interval) Thread.sleep(interval - duration)

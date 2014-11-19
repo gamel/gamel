@@ -57,12 +57,13 @@ object CoolGamel extends GamelApp {
 
   define a new action {
     name = 'fall
-    action = (l: List[Any]) => println("ouch")
+    action = (l: List[Any]) => println(l)
+    condition = (unit) => true
   }
 
   define a new action {
     name = 'stand
-    action = (l: List[Any]) => println("I'm ok... :)")
+    action = (l: List[Any]) => println(l)
   }
 
   define a new entity {
@@ -75,8 +76,7 @@ object CoolGamel extends GamelApp {
     )
     actions += (
       'fall,
-      'stand,
-      'say
+      'stand
     )
     renderer = EntityRenderer
   }
@@ -151,6 +151,8 @@ object CoolGamel extends GamelApp {
 //  nobody gives 'hat to 'mark
 
   'mark gives 'hat to 'tianyu
+  'tianyu does 'stand using ("Hello, World!!")
+  'ben does 'fall using ("Ouch!", "Yay!")
 
   // 'hat to 'tianyu
 
