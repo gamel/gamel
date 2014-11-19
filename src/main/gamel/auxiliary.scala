@@ -30,7 +30,7 @@ abstract class GamelResource {
 }
 
 case class GamelImage(uri: String) extends GamelResource {
-  resource = ImageIO.read(new File(uri));
+  resource = ImageIO.read(new File(uri))
 }
 
 case class GamelSound(uri: String) extends GamelResource {

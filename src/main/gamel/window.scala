@@ -8,6 +8,7 @@ import scala.swing._
 import scala.swing.event._
 import scala.swing.BorderPanel.Position._
 import scala.collection.mutable.{Map, HashMap}
+import javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE
 
 /**
  * IDEA GAMEL tries to integrate GUI with it.
@@ -52,7 +53,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
       layout(canvas) = Center
     }
 
-    peer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    peer.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE)
 
     // window show up in the center
     peer.setLocationRelativeTo(null)
@@ -140,9 +141,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     })
 
     override def closeOperation() {
-      println("exit in close operation")
       gamel.gameMsg ! "exit"
-      dispose()
     }
 
   } // end of top
@@ -168,7 +167,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
   }
 
   def close(): Unit = {
-    sys.exit()
+    gamel.gameMsg ! "exit"
   }
 
   def repaint(): Unit = { 
