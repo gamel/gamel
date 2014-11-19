@@ -68,6 +68,25 @@ abstract class GamelEntity extends Drawable {
   }
 
   /**
+   * Recursively initializing the entity's actions
+   */ 
+  def initActions(): Unit = {
+    actions foreach {
+      a => {
+        if (a._2 == null && !(global.actions contains a._1)) 
+          // actions not found
+          throw new UndefinedActionException("The action "  + a._1 + " has not been found")
+        else {
+          actions(a._1) = global.actions(a._1)
+        }
+      }
+    }
+    objects foreach {
+      obj => obj._2.initActions()
+    }
+  }
+
+  /**
    * Recursively trigger this entity's actions
    */
   def triggerActions(): Unit = {

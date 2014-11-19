@@ -44,13 +44,18 @@ abstract class GamelGame {
           val obj = entry._2
           // check if obj is initiated
           if (obj == null) {
-            if (global.entities contains key)
+            if (global.entities contains key) {
               destScene.objects(key) = global.entities(key)
+            }
             else
               throw new UndefinedInstanceException("instance " + key + " has not been found!")
           }
         }
       }
+
+      // load scene's actions
+      destScene initActions
+
       // mark the scene as loaded so we don't load this again
       destScene.loaded = true
     }
