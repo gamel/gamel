@@ -56,17 +56,6 @@ object CoolGamel extends GamelApp {
 
   require image "res/scene.jpg" as "startBackground"
 
-  define a new action {
-    name = 'fall
-    action = (l: List[Any]) => println(l)
-    condition = (unit) => false
-  }
-
-  define a new action {
-    name = 'stand
-    action = (l: List[Any]) => println(l)
-  }
-
   define a new entity {
     name = 'Player
     attributes += (
@@ -155,7 +144,18 @@ object CoolGamel extends GamelApp {
   'tianyu gives 'hat to 'mark
   'mark gives 'hat to 'ben
 
+  define a new action {
+    name = 'stand
+    action = (l: List[Any]) => println(l)
+  }
   'tianyu does 'stand using ("Hello, World!!")
+
+  define a new action {
+    name = 'fall
+    action = (l: List[Any]) => println(l)
+    condition = (unit) => false
+  }
+
   'ben does 'fall using ("Ouch!", "Yay!")
 
   // 'hat to 'tianyu

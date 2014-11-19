@@ -69,13 +69,13 @@ abstract class GamelEntity extends Drawable {
 
   /**
    * Recursively initializing the entity's actions
-   */ 
+   */
   def initActions(): Unit = {
     actions foreach {
       a => {
-        if (a._2 == null && !(global.actions contains a._1)) 
+        if (a._2 == null && !(global.actions contains a._1))
           // actions not found
-          throw new UndefinedActionException("The action "  + a._1 + " has not been found")
+          throw new UndefinedActionException("action "  + a._1 + " is undefined")
         else {
           actions(a._1) = global.actions(a._1)
         }
@@ -94,6 +94,8 @@ abstract class GamelEntity extends Drawable {
       a => {
         if (a._2.condition != null && a._2.condition(())) {
           a._2.action(this :: List())
+        } else if(a._2 == null) {
+          throw new UndefinedActionException("action " + a._1 + " is undefined")
         }
       }
     }
@@ -119,8 +121,12 @@ abstract class GamelEntity extends Drawable {
     var act = actions(action)
 
     if (act == null) {
-      act = global.actions(action)
-      actions(action) = act
+      if (global.actions contains action) {
+        act = global.actions(action)
+        actions(action) = act
+      } else {
+        throw new UndefinedActionException("action " + action + " is undefined")
+      }
     }
 
     act
