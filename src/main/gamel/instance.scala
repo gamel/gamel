@@ -13,6 +13,7 @@ abstract class GamelInstance extends GamelEntity {
   def of(entType: Symbol): Unit = {
     if (entType == null)
       throw new CreationException("entity type cannot be null");
+
     if (!(global.prototypes contains entType))
       throw new CreationException("entity type is not defined");
 
@@ -20,8 +21,9 @@ abstract class GamelInstance extends GamelEntity {
 
     entityType = entType
 
-    if (renderer == null)
+    if (renderer == null) {
       renderer = ent.renderer
+    }
 
     ent.attributes foreach {
       entry => {
@@ -55,44 +57,45 @@ abstract class GamelInstance extends GamelEntity {
   def to(newParent: Symbol): Unit = {
     if (newParent == null) {
       // give this object back to its parent before errororing
-      parent.objects(name) = this
+      if (parent != null){
+        parent.objects(name) = this
+      }
       moving = false
       throw new IllegalArgumentException("instance is null")
     }
 
     if (newParent == name){
-      parent.objects(name) = this
+      if (parent != null){
+        parent.objects(name) = this
+      }
       moving = false
       throw new IllegalArgumentException("cannot give entity to itself")
     }
 
     if (!(global.entities contains newParent) && !(global.scenes contains newParent)){
-      parent.objects(name) = this
+      if (parent != null){
+        parent.objects(name) = this
+      }
       moving = false
       throw new UndefinedInstanceException("instance is null")
     }
 
     if (!moving) {
-      parent.objects(name) = this
+      if (parent != null){
+        parent.objects(name) = this
+      }
       throw new IllegalStateException("to without gives")
     }
 
-    // parent and newParent must be either both scenes
-    // or both entities
     if(global.entities contains newParent){
-      if(!(global.entities contains parent.name)){
-        parent.objects(name) = this
-        moving = false
-        throw new IllegalArgumentException("new parent is not an instance")
-      }
       global.entities(newParent).objects(name) = this
     } else {
-      if(!(global.scenes contains parent.name)){
-        parent.objects(name) = this
-        moving = false
-        throw new IllegalArgumentException("new parent is not a scene")
-      }
       global.scenes(newParent).objects(name) = this
+    }
+
+    // getting from nobody
+    if(!(nobody isUsed name)){
+      nobody use name
     }
 
     parent = null

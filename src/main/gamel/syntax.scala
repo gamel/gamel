@@ -63,6 +63,19 @@ object create {
 
     // save the instance to the global scope
     global.entities(ent.name) = ent
+
+    // mark this instance as defined
+    nobody define ent.name
+
+    // mark all of its objects as used
+    ent.objects foreach {
+      obj => if(nobody isUsed obj._1){
+        throw new CreationException(obj._1 + " already belongs to someone")
+      } else {
+        nobody use obj._1
+      }
+    }
+
     ent
   }
 
@@ -77,6 +90,16 @@ object create {
 
     // save the scene to global scene scope
     global.scenes(sce.name) = sce
+
+    // mark all of its objects as used
+    sce.objects foreach {
+      obj => if(nobody isUsed obj._1){
+        throw new CreationException(obj._1 + " already belongs to someone")
+      } else {
+        nobody use obj._1
+      }
+    }
+
     sce
   }
 

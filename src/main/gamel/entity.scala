@@ -73,7 +73,7 @@ abstract class GamelEntity extends Drawable {
   def triggerActions(): Unit = {
     actions foreach {
       a => {
-        if (a._2.condition != null && a._2.condition()) {
+        if (a._2.condition != null && a._2.condition(())) {
           a._2.action(this :: List())
         }
       }
@@ -117,8 +117,17 @@ abstract class GamelEntity extends Drawable {
     if (inst == name)
       throw new IllegalArgumentException("cannot give self")
 
+    if (!(global.entities contains inst))
+      throw new UndefinedInstanceException("instance " + inst + "is undefined")
+
     if (!(objects contains inst))
       throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
+
+    if (!(nobody isDefined inst))
+      throw new IllegalStateException("instance " + inst + " is define but not marked as defined")
+
+    if (!(nobody isUsed inst))
+      throw new IllegalStateException("instance " + inst + " is used but not marked as used")
 
     // lazy evaluation
     var obj: GamelInstance = null
@@ -126,8 +135,6 @@ abstract class GamelEntity extends Drawable {
       obj = objects(inst)
     } else if (global.entities contains inst) {
       obj = global.entities(inst)
-    } else {
-      throw new UndefinedInstanceException("instance " + inst + " is not one of " + name + "'s objects")
     }
 
     // if the object is already moving, something is wrong
