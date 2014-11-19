@@ -34,7 +34,8 @@ object EntityRenderer extends GamelRenderer {
     var time = gamel.time
     var size = gamel.game.resolution
 
-    g2d.translate(pos._1, pos._2 + (Math.sin(time) * 100).toInt);
+    g2d.translate(pos._1 + (Math.cos(time) * 100).toInt,
+      pos._2 + (Math.sin(time) * 100).toInt);
     g2d.setColor(new Color(color))
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 18));
     g2d.drawString(name, -30, -30)
