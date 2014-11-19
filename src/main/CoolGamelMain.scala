@@ -127,9 +127,9 @@ object CoolGamel extends GamelApp {
       "position"    -> (203,300),
       "shirtcolor"  -> 0xffff00
     )
-//    objects += (
-//      'hat
-//    )
+ //   objects += (
+ //     'hat
+ //   )
   } of 'Player
 
   create a new instance {
@@ -151,6 +151,8 @@ object CoolGamel extends GamelApp {
   nobody gives 'hat to 'mark
 
   'mark gives 'hat to 'tianyu
+  'tianyu gives 'hat to 'mark
+  'mark gives 'hat to 'ben
 
   'tianyu does 'stand using ("Hello, World!!")
   'ben does 'fall using ("Ouch!", "Yay!")
