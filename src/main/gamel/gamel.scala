@@ -65,11 +65,12 @@ object gamel {
       }
     }
     window.close
+    system stop gameMsg
     system stop keyboard
     system stop mouse
     system stop console
-    system stop gameMsg
-    system shutdown
+    system.shutdown()
+    sys.exit(0)
   }
 
 }
