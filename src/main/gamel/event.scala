@@ -9,7 +9,7 @@ protected[gamel] abstract class GamelEvent {
   override def toString = name
 }
 
-protected[gamel] class GamelKeyEvent extends GamelEvent{
+class GamelKeyEvent extends GamelEvent{
   // key event
   var char: Char = null.asInstanceOf[Char]
   var key: Key.Value = null
@@ -18,7 +18,7 @@ protected[gamel] class GamelKeyEvent extends GamelEvent{
 }
 
 
-protected[gamel] class GamelMouseEvent extends GamelEvent{
+class GamelMouseEvent extends GamelEvent{
   // key event
   var point: Point = null
   var modifiers: Int = null.asInstanceOf[Int]
