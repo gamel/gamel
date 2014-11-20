@@ -15,9 +15,9 @@ abstract class GamelApp extends App {
 
   implicit def symbolToEntity(s: Symbol): GamelEntity = {
     if(global.entities contains s){
-      return global.entities(s).asInstanceOf[GamelEntity]
+      return global.entities(s)
     } else if (global.scenes contains s) {
-      return global.scenes(s).asInstanceOf[GamelScene]
+      return global.scenes(s)
     } else {
       throw new UndefinedInstanceException("the instance or scene " + s + " is undefined")
     }
