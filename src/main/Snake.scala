@@ -65,7 +65,7 @@ object SnakeBackgroundRenderer extends GamelRenderer {
 object FoodRenderer extends GamelRenderer {
 
   def render(self: GamelEntity, g2d: Graphics2D): Unit = {
-    var foodPos = (self tell "foodPos").asInstanceOf[Tuple2[Int, Int]] 
+    var foodPos = (self tell "foodPos").asInstanceOf[Tuple2[Int, Int]]
     val gridSize = GlobalSettings.gridSize
     // draw food
     g2d.setColor(Color.YELLOW)
@@ -191,7 +191,7 @@ object Snake extends GamelApp {
     name = 'turn
     condition = (unit) => (detect KeyPressed) != null
     action = (l: List[Any]) => {
-      val currentDir = GlobalSettings.direction 
+      val currentDir = GlobalSettings.direction
       val event = (detect KeyPressed).asInstanceOf[GamelKeyEvent]
       event.key match {
         case Key.Up     => { if(currentDir != "down")  GlobalSettings.direction = "up" }
@@ -221,7 +221,7 @@ object Snake extends GamelApp {
     name = 'snake
     renderer = SnakeRenderer
     actions += ('move, 'turn, 'grow)
-    attributes += ( 
+    attributes += (
       "body" -> List((20, 20), (20, 21), (20, 22), (20, 23)),
       "direction" -> "down"
     )
