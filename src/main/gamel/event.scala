@@ -3,13 +3,13 @@ package gamel
 import scala.swing._
 import scala.swing.event._
 
-abstract class GamelEvent {
-  var name: String = null
+protected[gamel] abstract class GamelEvent {
+  protected[gamel] var name: String = null
 
   override def toString = name
 }
 
-class GamelKeyEvent extends GamelEvent{
+protected[gamel] class GamelKeyEvent extends GamelEvent{
   // key event
   var char: Char = null.asInstanceOf[Char]
   var key: Key.Value = null
@@ -18,7 +18,7 @@ class GamelKeyEvent extends GamelEvent{
 }
 
 
-class GamelMouseEvent extends GamelEvent{
+protected[gamel] class GamelMouseEvent extends GamelEvent{
   // key event
   var point: Point = null
   var modifiers: Int = null.asInstanceOf[Int]
