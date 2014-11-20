@@ -14,16 +14,16 @@ import akka.actor.Props
 
 /**
  * Introduction to Actors
- * Actors are blocked until it receives some 
- * message. Then it make decision according 
+ * Actors are blocked until it receives some
+ * message. Then it make decision according
  * to the message it receives.
- * We use actors to implement our 
+ * We use actors to implement our
  * messaging system
  * */
 
-abstract class MessageActor extends Actor
+protected[gamel] abstract class MessageActor extends Actor
 
-class KeyMessageActor extends MessageActor {
+protected[gamel] class KeyMessageActor extends MessageActor {
 
   def receive = {
     case ("KeyTyped", source: Component, char: Char, modifiers: Int, location: Key.Location.Value) => {
@@ -40,7 +40,7 @@ class KeyMessageActor extends MessageActor {
 
 }
 
-class MouseMessageActor extends MessageActor {
+protected[gamel] class MouseMessageActor extends MessageActor {
 
   // source: source of mouse action, e.g. a button
   // point: position of mouse action
@@ -77,19 +77,19 @@ class MouseMessageActor extends MessageActor {
 
 }
 
-class GameMessageActor extends MessageActor {
+protected[gamel] class GameMessageActor extends MessageActor {
   def receive = {
     case "repaint" => { gamel.window.repaint() }
     case "pause"   => { gamel.running = false }
     case "resume"  => { gamel.running = true  }
-    case "exit"    => { 
-      gamel.exit = true 
+    case "exit"    => {
+      gamel.exit = true
       gamel.window.close()
     }
   }
 }
 
-class ConsoleMessageActor extends MessageActor {
+protected[gamel] class ConsoleMessageActor extends MessageActor {
   def receive = {
     case (dev, msg) => println("[" + dev + "] " + msg)
     case msg        => println(msg)

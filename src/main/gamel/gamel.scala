@@ -46,7 +46,7 @@ object gamel {
     mainLoop
   }
 
-  def mainLoop(): Unit = {
+  protected[gamel] def mainLoop(): Unit = {
     // calculate and check the interval
     val interval = (1000.0 / global.game.fps).toInt
     val seconds: Double = interval / 1000.0

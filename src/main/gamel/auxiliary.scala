@@ -9,13 +9,13 @@ import scala.swing._
 
 /**
  * Gamel Auxiliary Object
- * 
+ *
  * This is a collection of all gamel
  * auxiliary objects, including the
  * resource object, logic object, etc
  * */
 
-abstract class GamelResource {
+protected[gamel] abstract class GamelResource {
 
   var resource: Any = null
 
@@ -29,12 +29,12 @@ abstract class GamelResource {
 
 }
 
-case class GamelImage(uri: String) extends GamelResource {
+protected[gamel] case class GamelImage(uri: String) extends GamelResource {
   resource = ImageIO.read(new File(uri))
 }
 
-case class GamelSound(uri: String) extends GamelResource {
-  // not support yet
+protected[gamel] case class GamelSound(uri: String) extends GamelResource {
+  throw new UnsupportedOperationException("Not implemented yet")
 }
 
 trait GamelRenderer {
