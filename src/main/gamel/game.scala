@@ -38,20 +38,10 @@ abstract class GamelGame {
     // check whether the scene has been initialized because we are doing lazy evaluation
     if (!destScene.loaded) {
       // load the scene and its objects
-      destScene.objects foreach {
-        entry => {
-          var key = entry._1
-          val obj = entry._2
-          // check if obj is initiated
-          if (obj == null) {
-            if (global.entities contains key) {
-              destScene.objects(key) = global.entities(key)
-            }
-            else
-              throw new UndefinedInstanceException("instance " + key + " has not been found!")
-          }
-        }
-      }
+      destScene initObjects
+
+      // initializing renderers
+      destScene initRenderers
 
       // load scene's actions
       destScene initActions

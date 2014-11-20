@@ -13,6 +13,8 @@ abstract class GamelAction {
    * */
   var name: Symbol = null
 
+  var init: Unit => Unit = null
+
   var condition: Unit => Boolean = null
   var action: List[Any] => Unit = null
   var renderer: GamelRenderer = null

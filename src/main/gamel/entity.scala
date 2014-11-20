@@ -68,6 +68,38 @@ abstract class GamelEntity extends Drawable {
   }
 
   /**
+   * Recursively initializing the entity's renderers
+   */ 
+  def initRenderers(): Unit = {
+    if (renderer != null)
+      renderer.init()
+
+    objects foreach {
+      obj => obj._2.initRenderers()
+    }
+  }
+
+  /**
+   * Recursively initializing the entity's objects
+   */ 
+  def initObjects(): Unit = {
+    objects foreach {
+      o => {
+        if (o._2 == null && !(global.entities contains o._1)) 
+          // objects not found
+          throw new UndefinedInstanceException("The object "  + o._1 + " has not been found")
+        else {
+          val obj = global.entities(o._1)
+          objects(o._1) = obj
+        }
+      }
+    }
+    objects foreach {
+      obj => obj._2.initObjects()
+    }
+  }
+
+  /**
    * Recursively initializing the entity's actions
    */ 
   def initActions(): Unit = {
@@ -77,7 +109,10 @@ abstract class GamelEntity extends Drawable {
           // actions not found
           throw new UndefinedActionException("The action "  + a._1 + " has not been found")
         else {
-          actions(a._1) = global.actions(a._1)
+          val action = global.actions(a._1)
+          actions(a._1) = action
+          if (action.init != null) 
+            action.init(())
         }
       }
     }

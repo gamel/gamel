@@ -142,7 +142,7 @@ object require {
 
 object use {
 
-  def entity(name: Symbol): GamelInstance = {
+  def instance(name: Symbol): GamelInstance = {
     if (name == null)
       throw new IllegalArgumentException("the entity name to search for could not be null")
 
@@ -151,6 +151,18 @@ object use {
     }
     else {
       throw new UndefinedInstanceException("the entity " + name + " has not been found")
+    }
+  }
+
+  def scene(name: Symbol): GamelScene = {
+    if (name == null)
+      throw new IllegalArgumentException("the scene name to search for could not be null")
+
+    if (global.scenes contains name) {
+      return global.scenes(name)
+    }
+    else {
+      throw new UndefinedInstanceException("the scene " + name + " has not been found")
     }
   }
 
@@ -173,11 +185,22 @@ object use {
 }
 
 /**
- * leave the possibility that we might support user defined plug-ins
- * although very unlikely
+ * detect events
  * */
-// object use {
-// }
+object detect {
+
+  def KeyTyped         = global.eventQueue find (_.name == "KeyTyped")        getOrElse(null)
+  def KeyReleased      = global.eventQueue find (_.name == "KeyReleased")     getOrElse(null)
+  def KeyPressed       = global.eventQueue find (_.name == "KeyPressed")      getOrElse(null)
+  def MouseClicked     = global.eventQueue find (_.name == "MouseClicked")    getOrElse(null)
+  def MouseDragged     = global.eventQueue find (_.name == "MouseDragged")    getOrElse(null)
+  def MouseEntered     = global.eventQueue find (_.name == "MouseEntered")    getOrElse(null)
+  def MouseMoved       = global.eventQueue find (_.name == "MouseMoved")      getOrElse(null)
+  def MousePressed     = global.eventQueue find (_.name == "MousePressed")    getOrElse(null)
+  def MouseReleased    = global.eventQueue find (_.name == "MouseReleased")   getOrElse(null)
+  def MouseWheelMoved  = global.eventQueue find (_.name == "MouseWheelMoved") getOrElse(null)
+
+}
 
 /**
  * support for functionalities

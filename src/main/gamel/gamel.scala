@@ -55,18 +55,25 @@ object gamel {
       throw new IllegalStateException("fps is not valid!")
 
     while (!exit) {
-      if (running) {
         val start = System.currentTimeMillis()
+
+        // call repaint on window
         gameMsg ! "repaint"
 
-        // trigger events
-        game.currentScene.triggerActions()
-
+        // stop triggering during pause
+        if (running) {
+          // trigger events
+          game.currentScene.triggerActions
+          // clear event queue
+          global.eventQueue.clear
+        }
+        
         // do your logic codes here
         val duration = System.currentTimeMillis() - start
         if (duration < interval) Thread.sleep(interval - duration)
-        gamel.time += seconds
-      }
+
+        // stop counting time during pause
+        if (running) gamel.time += seconds
     }
     window.close
     system stop gameMsg

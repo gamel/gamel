@@ -38,5 +38,6 @@ case class GamelSound(uri: String) extends GamelResource {
 }
 
 trait GamelRenderer {
+  def init(): Unit = {}
   def render(self: GamelEntity, g2d: Graphics2D): Unit
 }

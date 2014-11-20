@@ -1,6 +1,6 @@
 package gamel
 
-import scala.collection.mutable.{Map, HashMap}
+import scala.collection.mutable.{Map, HashMap, Queue}
 
 object global {
 
@@ -38,4 +38,5 @@ object global {
     "MouseWheelMoved"     -> false
   )
 
+  val eventQueue = new Queue[GamelEvent]
 }
