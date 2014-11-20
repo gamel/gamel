@@ -11,32 +11,19 @@ abstract class GamelEntity extends Drawable {
    * validity of the name in define
    * and create syntax
    * */
-  var name: Symbol = null
+  protected[gamel] var name: Symbol = null
 
   // container for all kinds of stuff
-  var attributes = new HashMap[String, Any]
+  protected[gamel] var attributes = new HashMap[String, Any]
 
   // entity's renderer
-  var renderer: GamelRenderer = null
+  protected[gamel] var renderer: GamelRenderer = null
 
   // entity's action
-  var actions = new HashMap[Symbol, GamelAction]
+  protected[gamel] var actions = new HashMap[Symbol, GamelAction]
 
   // entity's children
-  var objects = new HashMap[Symbol, GamelInstance]
-
-  /**
-   * Create the flexibility that the user
-   * could put anything in the attributes
-   * @param attribute String
-   * @param description Any
-   * @return Unit
-   * */
-  def addAttrib(attribute: String, description: Any): Unit = {
-    if (attribute == null || description == null)
-      throw new DefinitionException("attribute or its name cannot be null")
-    attributes(attribute) = description
-  }
+  protected[gamel] var objects = new HashMap[Symbol, GamelInstance]
 
   /**
    * Semantics for getting attributes from
@@ -51,6 +38,10 @@ abstract class GamelEntity extends Drawable {
       case Some(value) => return value
     }
     return null
+  }
+
+  def set(attribute: String, value: Any): Unit = {
+    attributes(attribute) = value
   }
 
   /**
@@ -70,7 +61,7 @@ abstract class GamelEntity extends Drawable {
   /**
    * Recursively initializing the entity's renderers
    */ 
-  def initRenderers(): Unit = {
+  protected[gamel] def initRenderers(): Unit = {
     if (renderer != null)
       renderer.init()
 
@@ -82,7 +73,7 @@ abstract class GamelEntity extends Drawable {
   /**
    * Recursively initializing the entity's objects
    */ 
-  def initObjects(): Unit = {
+  protected[gamel] def initObjects(): Unit = {
     objects foreach {
       o => {
         if (o._2 == null && !(global.entities contains o._1)) 
@@ -101,13 +92,13 @@ abstract class GamelEntity extends Drawable {
 
   /**
    * Recursively initializing the entity's actions
-   */ 
-  def initActions(): Unit = {
+   */
+  protected[gamel] def initActions(): Unit = {
     actions foreach {
       a => {
-        if (a._2 == null && !(global.actions contains a._1)) 
+        if (a._2 == null && !(global.actions contains a._1))
           // actions not found
-          throw new UndefinedActionException("The action "  + a._1 + " has not been found")
+          throw new UndefinedActionException("action "  + a._1 + " is undefined")
         else {
           val action = global.actions(a._1)
           actions(a._1) = action
@@ -124,11 +115,13 @@ abstract class GamelEntity extends Drawable {
   /**
    * Recursively trigger this entity's actions
    */
-  def triggerActions(): Unit = {
+  protected[gamel] def triggerActions(): Unit = {
     actions foreach {
       a => {
         if (a._2.condition != null && a._2.condition(())) {
           a._2.action(this :: List())
+        } else if(a._2 == null) {
+          throw new UndefinedActionException("action " + a._1 + " is undefined")
         }
       }
     }
@@ -154,8 +147,12 @@ abstract class GamelEntity extends Drawable {
     var act = actions(action)
 
     if (act == null) {
-      act = global.actions(action)
-      actions(action) = act
+      if (global.actions contains action) {
+        act = global.actions(action)
+        actions(action) = act
+      } else {
+        throw new UndefinedActionException("action " + action + " is undefined")
+      }
     }
 
     act
@@ -214,7 +211,7 @@ abstract class GamelEntity extends Drawable {
 }
 
 // So that the user cannot instantiate a scene as an entity type
-abstract class GamelType extends GamelEntity {}
+protected[gamel] abstract class GamelType extends GamelEntity {}
 
 /**
  * This is a syntactic sugar for client

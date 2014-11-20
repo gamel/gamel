@@ -34,8 +34,10 @@ object EntityRenderer extends GamelRenderer {
     var time = gamel.time
     var size = gamel.game.resolution
 
-    g2d.translate(pos._1 + (Math.cos(time) * 100).toInt,
-      pos._2 + (Math.sin(time) * 100).toInt);
+    val dx = Math.cos(time) * Math.cos(4*time)
+    val dy = Math.sin(time) * Math.cos(4*time)
+
+    g2d.translate(pos._1 + (dx * 100).toInt , pos._2 + (dy * 100).toInt);
     g2d.setColor(new Color(color))
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 18));
     g2d.drawString(name, -30, -30)
@@ -55,17 +57,6 @@ object CoolGamel extends GamelApp {
   turn MouseWheelMoved on
 
   require image "res/scene.jpg" as "startBackground"
-
-  define a new action {
-    name = 'fall
-    action = (l: List[Any]) => println(l)
-    condition = (unit) => false
-  }
-
-  define a new action {
-    name = 'stand
-    action = (l: List[Any]) => println(l)
-  }
 
   define a new entity {
     name = 'Player
@@ -155,7 +146,18 @@ object CoolGamel extends GamelApp {
   'tianyu gives 'hat to 'mark
   'mark gives 'hat to 'ben
 
+  define a new action {
+    name = 'stand
+    action = (l: List[Any]) => println(l)
+  }
   'tianyu does 'stand using ("Hello, World!!")
+
+  define a new action {
+    name = 'fall
+    action = (l: List[Any]) => println(l)
+    condition = (unit) => false
+  }
+
   'ben does 'fall using ("Ouch!", "Yay!")
 
   // 'hat to 'tianyu

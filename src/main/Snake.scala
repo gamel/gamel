@@ -29,7 +29,7 @@ object GlobalSettings {
 object SnakeBackgroundRenderer extends GamelRenderer {
 
   override def init() {
-    GlobalSettings.size = global.game.resolution
+    GlobalSettings.size = gamel.game.resolution
     GlobalSettings.xMax = (GlobalSettings.size._1 / GlobalSettings.gridSize)
     GlobalSettings.yMax = (GlobalSettings.size._2 / GlobalSettings.gridSize)
     GlobalSettings.grid = Array.ofDim[Int](GlobalSettings.xMax, GlobalSettings.yMax)
@@ -134,7 +134,7 @@ object Snake extends GamelApp {
 
       GlobalSettings.grid(oldPos._2)(oldPos._1) = GlobalSettings.EMPTY
       GlobalSettings.grid(foodPos._2)(foodPos._1) = GlobalSettings.FOOD
-      self.attributes("foodPos") = foodPos
+      self.set("foodPos", foodPos)
       'snake does 'grow using (oldPos)
     }
   }

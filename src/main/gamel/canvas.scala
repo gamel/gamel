@@ -6,17 +6,17 @@ import java.awt.image.BufferedImage
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
 
-class GamelCanvas extends Panel {
+protected[gamel] class GamelCanvas extends Panel {
 
   // double buffer
-  var offscreen: BufferedImage = null
+  protected[gamel] var offscreen: BufferedImage = null
 
   /**
    * Rendering Function
    * @param g Graphics2D
    * @return Unit
    * */
-  override def paintComponent(g: Graphics2D): Unit = {
+  protected[gamel] override def paintComponent(g: Graphics2D): Unit = {
 
     if (offscreen == null) {
       offscreen = new BufferedImage(size.width, size.height, BufferedImage.TYPE_4BYTE_ABGR)
@@ -31,12 +31,12 @@ class GamelCanvas extends Panel {
     g.drawImage(offscreen, 0, 0, size.width, size.height, null)
   }
 
-  def clearBackground(g2d: Graphics2D): Unit = {
+  protected[gamel] def clearBackground(g2d: Graphics2D): Unit = {
     g2d.setColor(Color.BLACK)
     g2d.fillRect(0, 0, size.width, size.height)
   }
 
-  def drawScene(g2d: Graphics2D): Unit = {
+  protected[gamel] def drawScene(g2d: Graphics2D): Unit = {
     var scene = gamel.game.currentScene
     // if there is no scene, skip it
     if (scene == null) return
@@ -46,7 +46,7 @@ class GamelCanvas extends Panel {
     scene.draw(g2d)
   }
 
-  def drawEntities(g2d: Graphics2D): Unit = {
+  protected[gamel] def drawEntities(g2d: Graphics2D): Unit = {
     var scene = gamel.game.currentScene
     scene.objects foreach {
       entry => {

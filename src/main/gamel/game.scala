@@ -2,7 +2,7 @@ package gamel
 
 import scala.collection.mutable.{Map, HashMap}
 
-abstract class GamelGame {
+protected[gamel] abstract class GamelGame {
 
   var name: String = null
 

@@ -12,10 +12,10 @@ import javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE
 
 /**
  * IDEA GAMEL tries to integrate GUI with it.
- * This is the window class that prepare such 
+ * This is the window class that prepare such
  * stuff.
  * */
-class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApplication with Display {
+protected[gamel] class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApplication with Display {
 
   // basic attributes of a window
   var title: String = t
@@ -71,55 +71,55 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
       entry => {
         if (entry._2)       // if the listener is enabled
           entry._1 match {
-            case "KeyTyped"            => 
-              reactions += { 
-                case KeyTyped(source: Component, char: Char, modifiers: Int, location: Key.Location.Value) => 
+            case "KeyTyped"            =>
+              reactions += {
+                case KeyTyped(source: Component, char: Char, modifiers: Int, location: Key.Location.Value) =>
                   gamel.keyboard ! (entry._1, source, char, modifiers, location)
               }
-            case "KeyPressed"          => 
-              reactions += { 
-                case KeyPressed(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => 
+            case "KeyPressed"          =>
+              reactions += {
+                case KeyPressed(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) =>
                   gamel.keyboard ! (entry._1, source, key, modifiers, location)
               }
             case "KeyReleased"         =>
-              reactions += { 
-                case KeyReleased(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => 
+              reactions += {
+                case KeyReleased(source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) =>
                   gamel.keyboard ! (entry._1, source, key, modifiers, location)
               }
-            case "MouseClicked"        =>  
-              reactions += { 
-                case MouseClicked(source: Component, point: Point, modifiers: Int, clicks: Int, _) => 
-                  gamel.mouse ! (entry._1, source, point, modifiers, clicks) 
+            case "MouseClicked"        =>
+              reactions += {
+                case MouseClicked(source: Component, point: Point, modifiers: Int, clicks: Int, _) =>
+                  gamel.mouse ! (entry._1, source, point, modifiers, clicks)
               }
-            case "MouseDragged"        => 
+            case "MouseDragged"        =>
               reactions += {
                 case MouseDragged(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
               }
-            case "MouseEntered"        => 
+            case "MouseEntered"        =>
               reactions += {
                 case MouseEntered(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
               }
-            case "MouseMoved"          => 
+            case "MouseMoved"          =>
               reactions += {
                 case MouseMoved(source: Component, point: java.awt.Point, modifiers: Int) =>
                   gamel.mouse ! (entry._1, source, point, modifiers)
               }
-            case "MousePressed"        => 
+            case "MousePressed"        =>
               reactions += {
                 case MousePressed(source: Component, point: java.awt.Point, modifiers: Int, clicks: Int, _) =>
                   gamel.mouse ! (entry._1, source, point, modifiers, clicks)
               }
-            case "MouseReleased"       => 
+            case "MouseReleased"       =>
               reactions += {
                 case MouseReleased(source: Component, point: java.awt.Point, modifiers: Int, clicks: Int, _) =>
                   gamel.mouse ! (entry._1, source, point, modifiers, clicks)
               }
-            case "MouseWheelMoved"     => 
-              reactions += { 
-                case MouseWheelMoved(source: Component, point: Point, modifiers: Int, rotation: Int) => 
-                  gamel.mouse ! (entry._1, source, point, modifiers, rotation) 
+            case "MouseWheelMoved"     =>
+              reactions += {
+                case MouseWheelMoved(source: Component, point: Point, modifiers: Int, rotation: Int) =>
+                  gamel.mouse ! (entry._1, source, point, modifiers, rotation)
               }
           }
       }
@@ -135,7 +135,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
       }
       def componentMoved(e: java.awt.event.ComponentEvent) {
       }
-      def componentResized(e: java.awt.event.ComponentEvent) { 
+      def componentResized(e: java.awt.event.ComponentEvent) {
         println("I'm resized")
       }
     })
@@ -170,7 +170,7 @@ class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) extends SimpleSwingApp
     gamel.gameMsg ! "exit"
   }
 
-  def repaint(): Unit = { 
+  def repaint(): Unit = {
     canvas.repaint()
   }
 

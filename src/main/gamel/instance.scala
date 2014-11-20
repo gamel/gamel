@@ -1,7 +1,7 @@
 package gamel
 
-abstract class GamelInstance extends GamelEntity {
-  var entityType: Symbol = null
+protected[gamel] abstract class GamelInstance extends GamelEntity {
+  protected[gamel] var entityType: Symbol = null
 
   // denotes whether this instance is in the process of being moved
   protected[gamel] var moving = false

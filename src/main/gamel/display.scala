@@ -1,6 +1,6 @@
 package gamel
 
-trait Display {
+protected[gamel] trait Display {
   // support for fullscreen
   def isFullScreenSupported(): Boolean
 
