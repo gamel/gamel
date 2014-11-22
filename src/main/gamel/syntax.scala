@@ -189,16 +189,16 @@ object use {
  * */
 object detect {
 
-  def KeyTyped         = global.eventQueue find (_.name == "KeyTyped")        getOrElse(null)
-  def KeyReleased      = global.eventQueue find (_.name == "KeyReleased")     getOrElse(null)
-  def KeyPressed       = global.eventQueue find (_.name == "KeyPressed")      getOrElse(null)
-  def MouseClicked     = global.eventQueue find (_.name == "MouseClicked")    getOrElse(null)
-  def MouseDragged     = global.eventQueue find (_.name == "MouseDragged")    getOrElse(null)
-  def MouseEntered     = global.eventQueue find (_.name == "MouseEntered")    getOrElse(null)
-  def MouseMoved       = global.eventQueue find (_.name == "MouseMoved")      getOrElse(null)
-  def MousePressed     = global.eventQueue find (_.name == "MousePressed")    getOrElse(null)
-  def MouseReleased    = global.eventQueue find (_.name == "MouseReleased")   getOrElse(null)
-  def MouseWheelMoved  = global.eventQueue find (_.name == "MouseWheelMoved") getOrElse(null)
+  def KeyTyped         = (global.eventQueue find (_.name == "KeyTyped")        getOrElse(null)).asInstanceOf[GamelKeyEvent]
+  def KeyReleased      = (global.eventQueue find (_.name == "KeyReleased")     getOrElse(null)).asInstanceOf[GamelKeyEvent]
+  def KeyPressed       = (global.eventQueue find (_.name == "KeyPressed")      getOrElse(null)).asInstanceOf[GamelKeyEvent]
+  def MouseClicked     = (global.eventQueue find (_.name == "MouseClicked")    getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MouseDragged     = (global.eventQueue find (_.name == "MouseDragged")    getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MouseEntered     = (global.eventQueue find (_.name == "MouseEntered")    getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MouseMoved       = (global.eventQueue find (_.name == "MouseMoved")      getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MousePressed     = (global.eventQueue find (_.name == "MousePressed")    getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MouseReleased    = (global.eventQueue find (_.name == "MouseReleased")   getOrElse(null)).asInstanceOf[GamelMouseEvent]
+  def MouseWheelMoved  = (global.eventQueue find (_.name == "MouseWheelMoved") getOrElse(null)).asInstanceOf[GamelMouseEvent]
 
 }
 
@@ -218,3 +218,6 @@ object turn {
   def MouseWheelMoved  = (status: Boolean) => global.listeners("MouseWheelMoved")    = status
 }
 
+object go {
+  def to(sce: Symbol): Unit = global.game.switchToScene(sce)
+}

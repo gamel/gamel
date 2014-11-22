@@ -20,6 +20,36 @@ object SceneRenderer extends GamelRenderer {
     g2d.setColor(Color.WHITE)
     g2d.drawString("Hello World Adventure", 20, 50)
     g2d.drawString("This is the starting scene", 20, 120)
+
+    var time = gamel.time
+    if (time > 5  && time < 10){
+      go to 'room1
+    }
+  }
+
+}
+
+
+object RoomRenderer extends GamelRenderer {
+
+  val scene = use image "startBackground"
+  var switched = false
+
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
+    var size = gamel.game.resolution
+    g2d.drawImage(scene, 0, 0, size._1, size._2, null)
+
+    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
+    g2d.setColor(Color.WHITE)
+    g2d.drawString("Hello World Adventure", 20, 50)
+    g2d.drawString("This is room 1", 20, 120)
+
+    var time = gamel.time
+    if (time > 10 && !switched) {
+      val start = use scene 'start
+      start gives 'ben to 'room1
+      switched = true
+    }
   }
 
 }
@@ -70,6 +100,9 @@ object CoolGamel extends GamelApp {
       'fall,
       'stand
     )
+    //objects += (
+    //  'hat
+    //)
     renderer = EntityRenderer
   }
 
@@ -83,6 +116,7 @@ object CoolGamel extends GamelApp {
   create a new scene {
     name = 'room1
     attributes += ("description" -> "this is the first room")
+    renderer = RoomRenderer
   }
 
   create a new scene {

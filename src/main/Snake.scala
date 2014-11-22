@@ -8,8 +8,8 @@ import java.awt.Font
 import java.awt.Color
 
 object GlobalSettings {
-  val gridSize = 10
-  val speed = 10
+  val gridSize = 3
+  val speed = 40
 
   var grid: Array[Array[Int]] = null
   var size: Tuple2[Int, Int] = null
@@ -41,17 +41,6 @@ object SnakeBackgroundRenderer extends GamelRenderer {
     // draw background
     g2d.setColor(Color.BLACK)
     g2d.fillRect(0, 0, size._1, size._2)
-
-    for (i <- 0 to GlobalSettings.xMax - 1) {
-      for (j <- 0 to GlobalSettings.yMax - 1) {
-        GlobalSettings.grid(j)(i) match {
-          case GlobalSettings.SNAKE => g2d.setColor(Color.GRAY)
-          case GlobalSettings.FOOD => g2d.setColor(Color.GREEN)
-          case GlobalSettings.EMPTY => g2d.setColor(Color.BLACK)
-        }
-        g2d.fillRect(i * gridSize, j * gridSize, gridSize, gridSize)
-      }
-    }
 
     if (GlobalSettings.gameEnd) {
       g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
@@ -206,7 +195,7 @@ object Snake extends GamelApp {
   create a new scene {
     name = 'background
     renderer = SnakeBackgroundRenderer
-    objects += ('food, 'snake)
+    //objects += ('food, 'snake)
     actions += ('gameEnd)
   }
 
@@ -227,10 +216,14 @@ object Snake extends GamelApp {
     )
   }
 
+  nobody gives 'food to 'background
+  nobody gives 'snake to 'background
+
   create a new game {
     name = "Snake"
     startScene = 'background
-    resolution  = (600, 600)
+    resolution  = (900, 900)
+    fps = 40
   }
 
   start game

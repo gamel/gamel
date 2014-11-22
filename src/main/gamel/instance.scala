@@ -47,8 +47,14 @@ protected[gamel] abstract class GamelInstance extends GamelEntity {
       entry => {
         val key = entry._1
         val value = entry._2
-        if (!(objects contains key))
+        if (!(objects contains key) && !(nobody isUsed key)){
           objects(key) = value
+          nobody use key
+        } else if (objects contains key) {
+          throw new UndefinedInstanceException("instance " + key + " is undefined")
+        } else {
+          throw new CreationException(key + " is already owned")
+        }
       }
     }
 

@@ -48,7 +48,7 @@ object nobody extends GamelInstance {
       throw new IllegalArgumentException("instance is null")
 
     if (!(global.entities contains inst))
-      throw new UndefinedInstanceException("instance " + inst + "is undefined")
+      throw new UndefinedInstanceException("instance " + inst + " is undefined")
 
     if (!(nobody isDefined inst))
       throw new IllegalStateException("instance " + inst + " is define but not marked as defined")
