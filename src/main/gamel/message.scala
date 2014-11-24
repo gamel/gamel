@@ -1,4 +1,4 @@
-package idea.gamel
+package gamel
 
 import java.awt.Point
 
@@ -14,61 +14,106 @@ import akka.actor.Props
 
 /**
  * Introduction to Actors
- * Actors are blocked until it receives some 
- * message. Then it make decision according 
+ * Actors are blocked until it receives some
+ * message. Then it make decision according
  * to the message it receives.
- * We use actors to implement our 
+ * We use actors to implement our
  * messaging system
  * */
 
-abstract class MessageActor extends Actor
+protected[gamel] abstract class MessageActor extends Actor
 
-class KeyMessageActor extends MessageActor {
+protected[gamel] class KeyMessageActor extends MessageActor {
 
   def receive = {
-    case ("KeyTyped", source: Component, char: Char, modifiers: Int, location: Key.Location.Value) => {
-      println("pressed " + char)
+    case ("KeyTyped", source: Component, ch: Char, mod: Int, loc: Key.Location.Value) => {
+      global.eventQueue += new GamelKeyEvent {
+        name = "KeyTyped"
+        char = ch
+        modifiers = mod
+        location = loc
+      }
     }
-    case ("KeyPressed", source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => {
-      println("pressed key " + key)
+    case ("KeyPressed", source: Component, k: Key.Value, mod: Int, loc: Key.Location.Value) => {
+      global.eventQueue += new GamelKeyEvent {
+        name = "KeyPressed"
+        key = k
+        modifiers = mod
+        location = loc
+      }
     }
-    case ("KeyReleased", source: Component, key: Key.Value, modifiers: Int, location: Key.Location.Value) => {
-      println("release key " + key)
+    case ("KeyReleased", source: Component, k: Key.Value, mod: Int, loc: Key.Location.Value) => {
+      global.eventQueue += new GamelKeyEvent {
+        name = "KeyReleased"
+        key = k
+        modifiers = mod
+        location = loc
+      }
     }
-    case _       => println("huh? you pressed a key?")
+    case _       => Console.err.println("huh? you pressed a key?")
   }
 
 }
 
-class MouseMessageActor extends MessageActor {
+protected[gamel] class MouseMessageActor extends MessageActor {
 
   // source: source of mouse action, e.g. a button
   // point: position of mouse action
-  // modifiers: combination with keys
+  // mod: combination with keys
   // clicks: time of clicks
   def receive = {
-    case ("MouseClicked", source: Component, point: Point, modifiers: Int, clicks: Int) => {
-      println("mouse click at (" + point.x + ", " + point.y + ") " + clicks + " times")
-      // dynamicall add user define actions here
-      // usually the mouse action is defined by the scene
+    case ("MouseClicked", source: Component, pt: Point, mod: Int, clk: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseClicked"
+        point = pt
+        modifiers = mod
+        clicks = clk
+      }
     }
-    case ("MouseWheelMoved", source: Component, point: Point, modifiers: Int, rotation: Int) => {
-      println("mouse wheel moved!")
+    case ("MouseWheelMoved", source: Component, pt: Point, mod: Int, rot: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseWheelMoved"
+        point = pt
+        modifiers = mod
+        rotation = rot
+      }
     }
-    case ("MouseDragged", source: Component, point: java.awt.Point, modifiers: Int) => {
-      println("mouse draged")
+    case ("MouseDragged", source: Component, pt: Point, mod: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseDragged"
+        point = pt
+        modifiers = mod
+      }
     }
-    case ("MouseEntered", source: Component, point: java.awt.Point, modifiers: Int) => {
-      println("mouse entered")
+    case ("MouseEntered", source: Component, pt: Point, mod: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseEntered"
+        point = pt
+        modifiers = mod
+      }
     }
-    case ("MouseMoved", source: Component, point: java.awt.Point, modifiers: Int) => {
-      println("mouse moved")
+    case ("MouseMoved", source: Component, pt: Point, mod: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseMoved"
+        point = pt
+        modifiers = mod
+      }
     }
-    case ("MousePressed", source: Component, point: java.awt.Point, modifiers: Int, clicks: Int) => {
-      println("mouse pressed")
+    case ("MousePressed", source: Component, pt: Point, mod: Int, clk: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MousePressed"
+        point = pt
+        modifiers = mod
+        clicks = clk
+      }
     }
-    case ("MouseReleased", source: Component, point: java.awt.Point, modifiers: Int, clicks: Int) => {
-      println("mouse released")
+    case ("MouseReleased", source: Component, pt: Point, mod: Int, clk: Int) => {
+      global.eventQueue += new GamelMouseEvent {
+        name = "MouseReleased"
+        point = pt
+        modifiers = mod
+        clicks = clk
+      }
     }
     case _ => {
       Console.err.println("huh? are you sure you are sending the correct message to mouse listener?")
@@ -77,15 +122,19 @@ class MouseMessageActor extends MessageActor {
 
 }
 
-class GameMessageActor extends MessageActor {
+protected[gamel] class GameMessageActor extends MessageActor {
   def receive = {
-    case "pause"  => { gamel.running = false }
-    case "resume" => { gamel.running = true  }
-    case "exit"   => { gamel.exit = true }
+    case "repaint" => { gamel.window.repaint() }
+    case "pause"   => { gamel.running = false }
+    case "resume"  => { gamel.running = true  }
+    case "exit"    => {
+      gamel.exit = true
+      gamel.window.close()
+    }
   }
 }
 
-class ConsoleMessageActor extends MessageActor {
+protected[gamel] class ConsoleMessageActor extends MessageActor {
   def receive = {
     case (dev, msg) => println("[" + dev + "] " + msg)
     case msg        => println(msg)

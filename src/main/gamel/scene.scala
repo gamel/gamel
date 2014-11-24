@@ -1,14 +1,11 @@
-package idea.gamel
+package gamel
 
 import scala.swing._
 import scala.collection.mutable.{Map, HashMap}
 
-abstract class GamelScene extends GamelEntity {
+protected[gamel] abstract class GamelScene extends GamelEntity {
 
-  /**
-   * FIELDS:
-   *  + name - Entity
-   * */
+  protected[gamel] var loaded = false
 
   /**
    * Every child class of Entity will want to

@@ -1,4 +1,4 @@
-import idea.gamel._
+import gamel._
 import scala.swing._
 
 import java.io.File
@@ -12,14 +12,66 @@ object SceneRenderer extends GamelRenderer {
 
   val scene = use image "startBackground"
 
-  def render(g2d: Graphics2D): Unit = {
-    var size = global.game.resolution
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
+    var size = gamel.game.resolution
     g2d.drawImage(scene, 0, 0, size._1, size._2, null)
 
     g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
     g2d.setColor(Color.WHITE)
-    g2d.drawString("Hello World Advanture", 20, 50)
+    g2d.drawString("Hello World Adventure", 20, 50)
     g2d.drawString("This is the starting scene", 20, 120)
+
+    var time = gamel.time
+    if (time > 5  && time < 10){
+      go to 'room1
+    }
+  }
+
+}
+
+
+object RoomRenderer extends GamelRenderer {
+
+  val scene = use image "startBackground"
+  var switched = false
+
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
+    var size = gamel.game.resolution
+    g2d.drawImage(scene, 0, 0, size._1, size._2, null)
+
+    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
+    g2d.setColor(Color.WHITE)
+    g2d.drawString("Hello World Adventure", 20, 50)
+    g2d.drawString("This is room 1", 20, 120)
+
+    var time = gamel.time
+    if (time > 10 && !switched) {
+      val start = use scene 'start
+      start gives 'ben to 'room1
+      switched = true
+    }
+  }
+
+}
+
+object EntityRenderer extends GamelRenderer {
+
+  def render(self: GamelEntity, g2d: Graphics2D): Unit = {
+    var pos = (self tell "position").asInstanceOf[Tuple2[Int, Int]]
+    var color = (self tell "shirtcolor").asInstanceOf[Int]
+    var name = (self tell "name").asInstanceOf[String]
+
+    var time = gamel.time
+    var size = gamel.game.resolution
+
+    val dx = Math.cos(time) * Math.cos(4*time)
+    val dy = Math.sin(time) * Math.cos(4*time)
+
+    g2d.translate(pos._1 + (dx * 100).toInt , pos._2 + (dy * 100).toInt);
+    g2d.setColor(new Color(color))
+    g2d.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+    g2d.drawString(name, -30, -30)
+    g2d.fillRect(-25, -25, 50, 50);
   }
 
 }
@@ -36,16 +88,6 @@ object CoolGamel extends GamelApp {
 
   require image "res/scene.jpg" as "startBackground"
 
-  define a new action {
-    name = 'fall
-    action = (l: List[Any]) => println("ouch")
-  }
-
-  define a new action {
-    name = 'stand
-    action = (l: List[Any]) => println("I'm ok... :)")
-  }
-
   define a new entity {
     name = 'Player
     attributes += (
@@ -56,23 +98,25 @@ object CoolGamel extends GamelApp {
     )
     actions += (
       'fall,
-      'stand,
-      'say
+      'stand
     )
-    // renderer = (g2d: Graphics2D) => {
-    //   println("painting Player")
-    // }
+    //objects += (
+    //  'hat
+    //)
+    renderer = EntityRenderer
   }
 
   create a new scene {
     name = 'start
     attributes += ("description" -> "this is the starting scene")
     renderer = SceneRenderer
+    objects += ( 'tianyu, 'mark, 'ben )
   }
 
   create a new scene {
     name = 'room1
     attributes += ("description" -> "this is the first room")
+    renderer = RoomRenderer
   }
 
   create a new scene {
@@ -94,24 +138,63 @@ object CoolGamel extends GamelApp {
   }
 
   create a new instance {
-    of('Player)
     name = 'tianyu
     attributes += (
       "name"        -> "Tianyu",
-      "position"    -> (100,203),
-      "shirtcolor"  -> "blue"
+      "position"    -> (500,503),
+      "shirtcolor"  -> 0x00ffff
     )
-  }
+  } of 'Player
 
   create a new instance {
-    of('Player)
     name = 'mark
     attributes += (
       "name"        -> "Mark",
-      "position"    -> (203,100),
-      "shirtcolor"  -> "red"
+      "position"    -> (203,300),
+      "shirtcolor"  -> 0xffff00
+    )
+   objects += (
+     'hat
+   )
+  } of 'Player
+
+  create a new instance {
+    name = 'ben
+    attributes += (
+      "name"        -> "Ben",
+      "position"    -> (303,400),
+      "shirtcolor"  -> 0xff00ff
+    )
+  } of 'Player
+
+  create a new instance {
+    name = 'hat
+    attributes += (
+       "name"       -> "chapeau"
     )
   }
+
+  // nobody gives 'hat to 'mark
+
+  'mark gives 'hat to 'tianyu
+  'tianyu gives 'hat to 'mark
+  'mark gives 'hat to 'ben
+
+  define a new action {
+    name = 'stand
+    action = (l: List[Any]) => println(l)
+  }
+  'tianyu does 'stand using ("Hello, World!!")
+
+  define a new action {
+    name = 'fall
+    action = (l: List[Any]) => println(l)
+    condition = (unit) => false
+  }
+
+  'ben does 'fall using ("Ouch!", "Yay!")
+
+  // 'hat to 'tianyu
 
   start game
 

@@ -1,6 +1,5 @@
 GAMEL
 =====
-
 GAMEL is a Scala internal DSL to facilitate game making. The gamel Scala extention provides useful abstractions of game code to users, including entities and scenes.
 
 Currently under development.
@@ -8,6 +7,7 @@ Currently under development.
 The language
 ============
 
+<<<<<<< HEAD
 The exact syntax is prone to change.
 
 Entities
@@ -252,6 +252,9 @@ Todo
 + owns (Ben)
 + entity.name/entity->name (Ben)
 + does (Mark)
+=======
+The syntax and language features have changed, and this README is being updated.
+>>>>>>> 964397f3ea63b77ca4cc24cdb75164aa1c3596d7
 
 Build Tool
 ----------
@@ -266,12 +269,20 @@ Run:
   sbt clean
   ```
 
+  To watch for changes and compile in real time
+  ```
+  $ sbt
+    ~ compile
+  ```
+
+
 Nice-to-have features
 ---------------------
 + is
 + convert to native code using latest Java features
 + arrays
 + compatibility with Java
++ tests
 
 Developers
 ----------
