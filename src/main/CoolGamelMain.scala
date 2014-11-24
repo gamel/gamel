@@ -88,7 +88,7 @@ object CoolGamel extends GamelApp {
   create a new game {
     name = "Hello World Advanture"
     description = "Hey, World! How are you? Hello World Advanture is a demo of GAMEL"
-    resolution  = (1024, 768)
+    resolution = (1024, 768)
     startScene = 'start
     fullscreen = false
   }
