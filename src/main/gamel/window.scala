@@ -42,6 +42,9 @@ protected[gamel] class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) exten
     title = this.title
     size = new Dimension(width, height)
     centerOnScreen()
+    
+    // set icon
+    iconImage = toolkit.getImage("res/icon.png")
 
     // canvas for drawing game components
     canvas = new GamelCanvas {
