@@ -103,7 +103,7 @@ abstract class GamelEntity extends Drawable {
           val action = global.actions(a._1)
           actions(a._1) = action
           if (action.init != null) 
-            action.init(())
+            action.init()
         }
       }
     }
@@ -118,7 +118,7 @@ abstract class GamelEntity extends Drawable {
   protected[gamel] def triggerActions(): Unit = {
     actions foreach {
       a => {
-        if (a._2.condition != null && a._2.condition(())) {
+        if (a._2.condition != null && a._2.condition()) {
           a._2.action(this :: List())
         } else if(a._2 == null) {
           throw new UndefinedActionException("action " + a._1 + " is undefined")
