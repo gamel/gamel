@@ -7,9 +7,6 @@ Currently under development.
 The language
 ============
 
-<<<<<<< HEAD
-The exact syntax is prone to change.
-
 Entities
 --------
 
