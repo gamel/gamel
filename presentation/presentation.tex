@@ -192,7 +192,7 @@
         name = 'fooing
         action = (args: List[Any]) =>
             println("Fooooo!");
-        condition = (unit) => amIReady()
+        condition = () => amIReady()
     }
     \end{lstlisting}
 \end{frame}
@@ -422,7 +422,7 @@
         \item{Easy to learn}
         \item{Easy to read}
         \item{Easy to use}
-        \item{Lazy evaluation = no forward declaration}
+        \item{Lazy evaluation => no forward declaration}
         \item{Flexible}
     \end{itemize}
 \end{frame}
