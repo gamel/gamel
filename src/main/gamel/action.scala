@@ -13,10 +13,10 @@ protected[gamel] abstract class GamelAction {
    * */
   protected[gamel] var name: Symbol = null
 
-  var init: Unit => Unit = null
+  protected[gamel] var init: () => (Unit) = null
 
-  protected[gamel] var condition: Unit => Boolean = null
-  protected[gamel] var action: List[Any] => Unit = null
+  protected[gamel] var condition: () => Boolean = null
+  protected[gamel] var action: (List[Any]) => Unit = null
   protected[gamel] var renderer: GamelRenderer = null
 
   def using (params: Any*): Unit = {
