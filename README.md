@@ -198,49 +198,41 @@ List of Language Constructs
 ----------------------------
 Define an entity-type
 ```
-define entity <type> (
-    has <type> <name>
-    action <action> = [<functions>]
-)
+define a new entity {
+    name = '<name>
+    objects += (<instances>)
+    actions += (<actions>)
+}
 ```
 
 Instantiate an entity
 ```
-create entity <type> <name>
+create a new entity {
+    of('<type>)
+    name = '<name>
+    objects += (<instances>)
+    actions += (<actions>)
+}
 ```
 
 Trigger an action
 ```
-<entity> does <action> (<parameters>)
+'<instance or scene> does '<action> using (<parameters>)
 ```
 
-Access permanently owned entity
+Changing ownership of an entity
 ```
-<entity>.<entity>
-```
-
-Reposessing an entity
-```
-<entity or scene> gets <entity> from <entity or scene>
-<entity or scene> gets <entity> from nowhere
-<entity or scene> gets <entity> from anywhere
+<instance or scene> gives <instance> to <instance>
+nobody gives <instance> to <instance>
 ```
 
 Create a scene
 ```
-create scene <scene> (
-    has <type> <name>
-)
-```
-
-Define a transition
-```
-transition <scene> <name> <scene> = [<functions>]
-```
-
-Use a transition
-```
-<entity> goes <transition> (<parameters>)
+create a new scene {
+    name = '<name>
+    objects += (<instances>)
+    actions += (<actions>)
+}
 ```
 
 Todo
