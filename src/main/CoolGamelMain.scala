@@ -189,7 +189,7 @@ object CoolGamel extends GamelApp {
   define a new action {
     name = 'fall
     action = (l: List[Any]) => println(l)
-    condition = (unit) => false
+    condition = () => false
   }
 
   'ben does 'fall using ("Ouch!", "Yay!")

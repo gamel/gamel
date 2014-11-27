@@ -1,0 +1,436 @@
+\documentclass{beamer}
+
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{multicol}
+
+\title{GameL}
+\subtitle{The Game Scripting Language}
+\author{Tianyu Cheng\\ Ben Lin\\ Mark Mansi}
+
+\usetheme{Boadilla}
+\usecolortheme{beetle}
+
+\begin{document}
+
+% title frame
+\begin{frame}
+    \maketitle
+\end{frame}
+
+\begin{frame}
+    \frametitle{What is GameL?}
+    \begin{itemize}[<+->]
+        \item{A scripting language}
+        \item{Designed to abstract game constructs}
+        \item{Flexible}
+        \item{Integrated with Java/Scala Swing}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{What is GameL?}
+    Abstrations:
+    \begin{itemize}[<+->]
+        \item{Entities}
+        \item{Ownership}
+        \item{Actions}
+        \item{Scenes}
+        \item{Transitions}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Entities and Instances}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
+    Entities
+    \begin{itemize}[<+->]
+        \item{represent types of things in the game}
+        \item{can be instantiated}
+    \end{itemize}
+    \end{column}
+
+    \begin{column}[T]{5cm}
+    Instances
+    \begin{itemize}[<+->]
+        \item{are Instances of Entities}
+        \item{are the actual things in the game}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Entities and Instances}
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Foo
+    }
+
+    create a new instance {
+        name = 'foo
+    } of 'Foo
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Entities and Instances}
+    Entities and Instances can also have attributes:
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Foo
+        attributes += (
+            "description" -> "very foo-ish",
+            "color" -> 0xa5a5a5,
+            "position" -> (0, 0)
+        )
+    }
+    create a new instance {
+        name = 'foo
+        attributes += (
+            "restaurant" -> "La Bureau de Beurre",
+            "pet" -> new Dog("Doggie")
+        )
+    } of 'Foo
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Entities and Instances}
+    To get the value of an attribute:
+    \begin{lstlisting}
+    var food = 'foo tell "restaurant"
+    var pos  = 'foo tell "position"
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ownership}
+    \begin{itemize}[<+->]
+        \item{Entities can own other Entities}
+        \item{No multiple ownership}
+        \item{\texttt{nobody} owns the leftovers}
+        \item{Ownership can be transfered}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Ownership}
+    Entity vs Instance
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Bar
+    }
+    create a new instance {
+        name = 'bar
+    } of 'Bar
+    create a new instance {
+        name = 'foo
+        objects += (
+            'bar
+        )
+    } of 'Bar
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Ownership}
+    Entity vs Instance
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Bar
+    }
+    create a new instance {
+        name = 'bar
+    } of 'Bar
+    define a new entity {
+        name = 'Foo
+        objects += (
+            'bar
+        )
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Ownership}
+    Transfer of ownership
+    \begin{lstlisting}
+    nobody gives 'foo to 'bar
+    // nobody gave 'foo to 'bar
+
+    'bar gives 'foo to 'baz
+    // 'bar gave 'foo to 'baz
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Actions}
+    \begin{itemize}[<+->]
+        \item{User-defined responses to actions}
+        \item{Manual and automatic triggering}
+        \item{Reusable}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
+    \begin{lstlisting}
+    define a new action {
+        name = 'fooing
+        action = (args: List[Any]) =>
+            println("Fooooo!");
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
+    \begin{lstlisting}
+    define a new action {
+        name = 'fooing
+        action = (args: List[Any]) =>
+            println("Fooooo!");
+        condition = () => amIReady()
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Foo
+        actions += (
+            'fooing
+        )
+    }
+    create a new entity {
+        name = 'foo
+    }
+    \end{lstlisting}
+    \pause
+    \begin{lstlisting}
+    'foo does 'fooing using ()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
+    \begin{lstlisting}
+    define a new entity {
+        name = 'Foo
+    }
+    create a new instance {
+        name = 'foo
+        actions += (
+            'fooing
+        )
+    } of 'Foo
+    \end{lstlisting}
+    \pause
+    \begin{lstlisting}
+    'foo does 'fooing using ()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scenes}
+    \begin{itemize}[<+->]
+        \item{represent locations in the game}
+        \item{can own Entities}
+        \item{can have actions}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Scenes}
+    \begin{lstlisting}
+    create a new scene {
+        name = 'Place1
+        objects += (
+            'foo,
+            'baz
+        )
+        actions += (
+            'fooing,
+            'bazing
+        )
+    }
+    nobody gives 'bar to 'Place1
+    'Place1 gives 'bar to 'foo
+    'foo gives 'bar to 'Place1
+    'Place1 does 'bazing using ()
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Game}
+    The game object contains the settings of the game
+    \begin{lstlisting}
+    create a new game {
+        name = "Hello World! Adventure"
+        description = "Hello World!"
+        resolution = (1024, 512)
+        startScene = 'StartScene
+        fps = 60 // optional, default=30
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Graphics}
+    \begin{itemize}[<+->]
+        \item{Integrated with Swing}
+        \item{Automatic rendering}
+        \item{Support for backgrounds}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Graphics}
+    \framesubtitle{GamelRenderer}
+    \begin{itemize}[<+->]
+        \item{Encapsulates rendering info and methods}
+        \item{Can use with scenes or entities}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{GamelRenderer}
+    Just subclass GamelRenderer:
+    \begin{lstlisting}[basicstyle=\small]
+    object SceneRenderer extends GamelRenderer {
+        def render(self: GamelEntity,
+                    g2d: Graphics2D): Unit = <function>
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{GamelRenderer}
+    Pass the GamelRenderer to the scene or entity:
+    \begin{lstlisting}[basicstyle=\small]
+    define a new entity {
+        name = 'Foo
+        renderer = FooRenderer
+    }
+    create a new instance {
+        name = 'bar
+        renderer = BarRenderer
+    } of 'Bar
+    create a new scene {
+        name = 'Room
+        renderer = SceneRenderer
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Graphics}
+    \framesubtitle{Rendering}
+    \begin{itemize}[<+->]
+        \item{All of the current scene's objects are rendered}
+        \item{If an entity is rendered, all of its objects are too}
+        \item{If an entity or scene does not have a renderer, it is not rendered}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{Switching scenes}
+    To switch scenes:
+    \begin{lstlisting}
+    go to 'Scene2
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Graphics}
+    \framesubtitle{Require and Use and GamelRenderer}
+    \begin{itemize}[<+->]
+        \item{Support for more easily using images in game design}
+        \item{Allows "aliasing" of images}
+        \item{The GamelRenderer also has a \texttt{scene} field for backgrounds}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{Require and Use}
+    \begin{lstlisting}
+     require image "scene.jpg" as "bg"
+     // now scene.jpg can be refered to as "bg"
+
+     ...
+
+     object SceneRenderer extends GamelRenderer {
+        var scene = use image "bg"
+        // using image as the bg
+        def render...
+     }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Event handling}
+    Support for many keyboard and mouse events:
+    \begin{multicols}{2}
+    \begin{itemize}[<+->]
+        \item{Key press and release}
+        \item{Typing}
+        \item{Clicking}
+        \item{Mouse over}
+        \item{Mouse moving}
+        \item{Mouse press and release}
+        \item{Dragging}
+        \item{Scrolling}
+    \end{itemize}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Event handling}
+    To toggle an event handler:
+    \begin{lstlisting}
+    turn KeyPress on
+    turn MousePress off
+    ...
+    \end{lstlisting}
+
+    To detect an event:
+    \begin{lstlisting}
+    detect KeyPress
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Starting the game}
+    To start rendering the game:
+    \begin{lstlisting}
+    start game
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Advantages of GameL}
+    \begin{itemize}[<+->]
+        \item{Modular}
+        \item{Easy to learn}
+        \item{Easy to read}
+        \item{Easy to use}
+        \item{Lazy evaluation => no forward declaration}
+        \item{Flexible}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[plain,c]
+    \begin{center}
+        \Huge DEMO
+    \end{center}
+\end{frame}
+
+\end{document}

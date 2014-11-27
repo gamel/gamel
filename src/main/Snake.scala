@@ -8,8 +8,8 @@ import java.awt.Font
 import java.awt.Color
 
 object GlobalSettings {
-  val gridSize = 3
-  val speed = 40
+  val gridSize = 20
+  val speed = 10
 
   var grid: Array[Array[Int]] = null
   var size: Tuple2[Int, Int] = null
@@ -104,7 +104,7 @@ object Snake extends GamelApp {
 
   define a new action {
     name = 'newFood
-    condition = (unit) => {
+    condition = () => {
       val head = GlobalSettings.snake head
       val food = use instance 'food
       val pos = (food tell "foodPos").asInstanceOf[Tuple2[Int, Int]]
@@ -130,7 +130,7 @@ object Snake extends GamelApp {
 
   define a new action {
     name = 'gameEnd
-    condition = (unit) => {
+    condition = () => {
       val head = GlobalSettings.snake head
       val grid = GlobalSettings.grid
       var ret = false
@@ -150,7 +150,7 @@ object Snake extends GamelApp {
 
   define a new action {
     name = 'move
-    condition = (unit) => {
+    condition = () => {
       var ret = false
       val diff = gamel.time - GlobalSettings.lastTime
       if (diff > (1.0 / GlobalSettings.speed)) {
@@ -178,10 +178,10 @@ object Snake extends GamelApp {
 
   define a new action {
     name = 'turn
-    condition = (unit) => (detect KeyPressed) != null
+    condition = () => (detect KeyPressed) != null
     action = (l: List[Any]) => {
       val currentDir = GlobalSettings.direction
-      val event = (detect KeyPressed).asInstanceOf[GamelKeyEvent]
+      val event = detect.KeyPressed
       event.key match {
         case Key.Up     => { if(currentDir != "down")  GlobalSettings.direction = "up" }
         case Key.Down   => { if(currentDir != "up")    GlobalSettings.direction = "down" }
@@ -227,5 +227,4 @@ object Snake extends GamelApp {
   }
 
   start game
-
 }
