@@ -76,11 +76,7 @@ object gamel {
         if (running) gamel.time += seconds
     }
     window.close
-    system stop gameMsg
-    system stop keyboard
-    system stop mouse
-    system stop console
-    system.shutdown()
+    gamel.system.shutdown()
     sys.exit(0)
   }
 

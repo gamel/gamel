@@ -170,7 +170,6 @@ protected[gamel] class GamelWindow(t: String, w: Int, h: Int, fs: Boolean) exten
   }
 
   def close(): Unit = {
-    gamel.gameMsg ! "exit"
   }
 
   def repaint(): Unit = {

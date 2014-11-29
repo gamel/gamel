@@ -24,6 +24,9 @@ object GlobalSettings {
 
   var gameEnd = false
   var lastTime: Double = 0.0
+
+  val initialSnake = List((20, 20), (20, 21), (20, 22), (20, 23));
+  val initialDirection = "down";
 }
 
 object SnakeBackgroundRenderer extends GamelRenderer {
@@ -43,9 +46,7 @@ object SnakeBackgroundRenderer extends GamelRenderer {
     g2d.fillRect(0, 0, size._1, size._2)
 
     if (GlobalSettings.gameEnd) {
-      g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
-      g2d.setColor(Color.WHITE)
-      g2d.drawString("Game Ends", 20, 50)
+      go to 'ending
     }
   }
 
@@ -67,7 +68,7 @@ object SnakeRenderer extends GamelRenderer {
 
   override def init(): Unit = {
     val snake = use instance 'snake
-    GlobalSettings .snake = (snake tell "body").asInstanceOf[List[Tuple2[Int, Int]]]
+    GlobalSettings.snake = (snake tell "body").asInstanceOf[List[Tuple2[Int, Int]]]
     GlobalSettings.direction = (snake tell "direction").asInstanceOf[String]
   }
 
@@ -123,7 +124,7 @@ object Snake extends GamelApp {
 
       GlobalSettings.grid(oldPos._2)(oldPos._1) = GlobalSettings.EMPTY
       GlobalSettings.grid(foodPos._2)(foodPos._1) = GlobalSettings.FOOD
-      self.set("foodPos", foodPos)
+      self set("foodPos", foodPos)
       'snake does 'grow using (oldPos)
     }
   }
@@ -144,7 +145,6 @@ object Snake extends GamelApp {
     }
     action = (l: List[Any]) => {
       GlobalSettings.gameEnd = true
-      gamel.gameMsg ! "pause"
     }
   }
 
@@ -199,6 +199,15 @@ object Snake extends GamelApp {
     actions += ('gameEnd)
   }
 
+  create a new scene {
+    name = 'ending
+    renderer = (self: GamelEntity, g2d: Graphics2D) => {
+      g2d.setFont(new Font("TimesRoman", Font.PLAIN, 48));
+      g2d.setColor(Color.WHITE)
+      g2d.drawString("Game Ends", 20, 50)
+    }
+  }
+
   create a new instance {
     name = 'food
     renderer = FoodRenderer
@@ -211,8 +220,8 @@ object Snake extends GamelApp {
     renderer = SnakeRenderer
     actions += ('move, 'turn, 'grow)
     attributes += (
-      "body" -> List((20, 20), (20, 21), (20, 22), (20, 23)),
-      "direction" -> "down"
+      "body" -> GlobalSettings.initialSnake,
+      "direction" -> GlobalSettings.initialDirection
     )
   }
 
