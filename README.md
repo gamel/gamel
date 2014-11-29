@@ -113,10 +113,9 @@ define a new action {
 }
 // create a Foo called foo
 create a new instance {
-    of('Foo)
     name = 'foo
     actions += ('fooing)
-}
+} of 'Foo
 'foo does 'fooing using (<parameters>) // trigger the fooing action of Foo
                                        // on the entity instance foo
 ```
@@ -132,10 +131,9 @@ define a new action {
 }
 // create a Foo called foo
 create a new instance {
-    of('Foo)
     name = 'foo
     actions += ('fooing)
-}
+} of 'Foo
 ```
 
 Scenes
@@ -241,11 +239,10 @@ define a new entity {
 Instantiate an entity
 ```
 create a new entity {
-    of('<type>)
     name = '<name>
     objects += (<instances>)
     actions += (<actions>)
-}
+} of <type>
 ```
 
 Trigger an action
