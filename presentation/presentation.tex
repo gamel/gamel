@@ -3,6 +3,7 @@
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage{multicol}
+\usepackage{graphicx}
 
 \title{GameL}
 \subtitle{The Game Scripting Language}
@@ -20,24 +21,54 @@
 
 \begin{frame}
     \frametitle{What is GameL?}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{itemize}[<+->]
         \item{A scripting language}
         \item{Designed to abstract game constructs}
         \item{Flexible}
         \item{Integrated with Java/Scala Swing}
     \end{itemize}
+    \end{column}
+    \begin{column}[T]{5cm}
+        \includegraphics[width=5cm]{../res/icon}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
     \frametitle{What is GameL?}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     Abstrations:
-    \begin{itemize}[<+->]
-        \item{Entities}
-        \item{Ownership}
-        \item{Actions}
-        \item{Scenes}
-        \item{Transitions}
+    \begin{itemize}
+        \item<1-> Entities
+        \item<2-> Ownership
+        \item<3-> Actions
+        \item<4-> Scenes
+        \item<5-> Transitions
     \end{itemize}
+    \end{column}
+    \begin{column}[T]{5cm}
+        \includegraphics<1>[width=7cm]{foo}
+        \visible<2>{
+            \includegraphics<2>[width=5cm]{ownership}
+
+            \tiny{http://forums.ubi.com/archive/index.php/t-775003.html}
+        }
+        \visible<3>{
+            \includegraphics<3>[width=5cm]{action}
+
+           \tiny{http://properpropaganda.net/2013/08/4-tips-on-designing-calls-to-action-ctas/}
+        }
+        \visible<4>{
+            \includegraphics<4>[width=5cm]{scene}
+
+            \tiny{http://upload.wikimedia.org/wikipedia/\\commons/5/58/Sunset\_2007-1.jpg}
+        }
+
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
