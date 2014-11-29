@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{multicol}
 \usepackage{graphicx}
+\usepackage{courier}
 
 \title{GameL}
 \subtitle{The Game Scripting Language}
@@ -11,6 +12,8 @@
 
 \usetheme{Boadilla}
 \usecolortheme{beetle}
+
+\lstset{basicstyle=\footnotesize\ttfamily, breaklines=true}
 
 \begin{document}
 
@@ -66,6 +69,11 @@
 
             \tiny{http://upload.wikimedia.org/wikipedia/\\commons/5/58/Sunset\_2007-1.jpg}
         }
+        \visible<5>{
+            \includegraphics<5>[width=5cm]{transition}
+
+            \tiny{http://www.peninsulabikeparty.org/wp-content/uploads/2013/02/Full-moon-over-water.jpg}
+        }
 
     \end{column}
     \end{columns}
@@ -94,15 +102,26 @@
 
 \begin{frame}[fragile]
     \frametitle{Entities and Instances}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     define a new entity {
         name = 'Foo
     }
+    \end{lstlisting}
 
+    \begin{lstlisting}
     create a new instance {
         name = 'foo
     } of 'Foo
     \end{lstlisting}
+    \end{column}
+
+    \begin{column}[T]{5cm}
+        \includegraphics<1>[width=5cm]{foo}
+        \includegraphics<2>[width=5cm]{foo-inst}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -149,6 +168,8 @@
 \begin{frame}[fragile]
     \frametitle{Ownership}
     Entity vs Instance
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     define a new entity {
         name = 'Bar
@@ -163,11 +184,19 @@
         )
     } of 'Bar
     \end{lstlisting}
+    \end{column}
+
+    \begin{column}[T]{5cm}
+    \includegraphics[width=5cm]{bar-owner}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Ownership}
     Entity vs Instance
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     define a new entity {
         name = 'Bar
@@ -182,18 +211,32 @@
         )
     }
     \end{lstlisting}
+    \end{column}
+
+    \begin{column}[T]{5cm}
+    \includegraphics[width=5cm]{foo-bar-owner}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Ownership}
-    Transfer of ownership
     \begin{lstlisting}
     nobody gives 'foo to 'bar
     // nobody gave 'foo to 'bar
+    \end{lstlisting}
+    \includegraphics<1>[width=13cm]{nobody-gives1}
+    \includegraphics<2>[width=13cm]{nobody-gives2}
+\end{frame}
 
+\begin{frame}[fragile]
+    \frametitle{Ownership}
+    \begin{lstlisting}
     'bar gives 'foo to 'baz
     // 'bar gave 'foo to 'baz
     \end{lstlisting}
+    \includegraphics<1>[width=13cm]{bar-gives1}
+    \includegraphics<2>[width=13cm]{bar-gives2}
 \end{frame}
 
 \begin{frame}
@@ -214,6 +257,7 @@
             println("Fooooo!");
     }
     \end{lstlisting}
+    \includegraphics[width=10cm]{fooing}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -226,10 +270,13 @@
         condition = () => amIReady()
     }
     \end{lstlisting}
+    \includegraphics[width=10cm]{fooing}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Actions}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     define a new entity {
         name = 'Foo
@@ -237,18 +284,30 @@
             'fooing
         )
     }
-    create a new entity {
+    create a new instance {
         name = 'foo
     }
     \end{lstlisting}
-    \pause
-    \begin{lstlisting}
-    'foo does 'fooing using ()
-    \end{lstlisting}
+    \end{column}
+    \begin{column}[T]{4cm}
+    \includegraphics[scale=0.4, trim=8cm 0cm 8cm 0cm]{foo-fooing}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Actions}
+    \begin{lstlisting}
+    'foo does 'fooing using ()
+    \end{lstlisting}
+    \pause
+    \includegraphics[width=13cm]{foo-inst-fooing}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     define a new entity {
         name = 'Foo
@@ -260,10 +319,20 @@
         )
     } of 'Foo
     \end{lstlisting}
-    \pause
+    \end{column}
+    \begin{column}[T]{4cm}
+    \includegraphics[scale=0.4, trim=8cm 0cm 8cm 0cm]{foo-Foo-fooing}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Actions}
     \begin{lstlisting}
     'foo does 'fooing using ()
     \end{lstlisting}
+    \pause
+    \includegraphics[width=13cm]{foo-inst-fooing}
 \end{frame}
 
 \begin{frame}
@@ -292,9 +361,31 @@
     nobody gives 'bar to 'Place1
     'Place1 gives 'bar to 'foo
     'foo gives 'bar to 'Place1
-    'Place1 does 'bazing using ()
+    'Place1 does 'bazing using (10, 11, 12)
     \end{lstlisting}
 \end{frame}
+
+{ %local backgrounds must be enclosed in braces
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{scene.jpg}}
+
+\begin{frame}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{foo-instance}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{baz-instance}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{bar-instance}
+\end{frame}
+
+\begin{frame}
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
+    \includegraphics[width=5cm, trim= 4cm 4cm 4cm 4cm]{foo-instance}\\
+    \includegraphics[width=5cm, trim= 4cm 4cm 4cm 4cm]{bar-instance}
+    \end{column}
+    \begin{column}[T]{4cm}
+    \includegraphics[width=5cm]{baz-instance}
+    \end{column}
+    \end{columns}
+\end{frame}
+}
 
 \begin{frame}[fragile]
     \frametitle{Game}
