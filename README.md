@@ -26,7 +26,56 @@ create a new instance {
 } of 'Foo
 ```
 
-This code create a new entity with the given name of the given type.
+This code creates a new instance of the entity with the given name of the given type. Entity definitions are final; once an entity is defined, it cannot be changed.
+
+Attributes
+----------
+
+Attributes are user-defined properties of an entity or scene. Each attribute is similar to a variable: it is a tuple containing a name (String) and a value (any type). Every entity and scene has a map storing these tuples.
+
+If attributes are assigned during entity definition, they will be the default attributes of every new instance of the entity.
+```
+define a new entity {
+    name = 'Foo
+    attributes += (
+        "name" -> "value",
+        "answer" -> 42
+    )
+}
+```
+
+Instances can add more attributes or overwrite the ones they inherit:
+```
+define a new entity {
+    name = 'Foo
+    attributes += (
+        "name" -> "value",
+    )
+}
+define a new entity {
+    name = 'foo
+    attributes += (
+        "name" -> "newValue",   //overwrites entry for "name"
+        "random" -> 4
+    )
+} of 'Foo
+```
+
+The keyword `set` is used to add a new attribue or overwrite an attribute of an instance, and the keyword `tell` is used to access the attributes of an instance.
+```
+define a new entity {
+    name = 'Foo
+}
+define a new entity {
+    name = 'foo
+    attributes += (
+        "name" -> "hello"
+    )
+} of 'Foo
+println('foo tell "name")   //prints out "hello"
+'foo set ("name", "goodbye")
+println('foo tell "name")   //prints out "goodbye"
+```
 
 Ownership
 ---------
@@ -100,6 +149,14 @@ create a new instance {
 ```
 
 If an entity A tries to give an entity B to some other entity, and A does not own B, an exception is thrown. If A does own B, and something causes the transfer of ownership to fail, A retains ownership of B. Ownership is not transitive.
+
+To check if an instance or scene owns another instance, use the `has` keyword.
+```
+if('foo has 'bar){
+    // case foo owns bar
+} else {
+    // case foo doesn't own bar
+}
 
 Actions
 -------
@@ -200,6 +257,18 @@ create a new scene {
 'Foo does 'fooing using (<parameters>)
 ```
 
+Scenes can also have attributes:
+
+```
+create a new scene {
+    name = 'Foo
+    atrributes += (
+        "name" -> "Hello World!",
+        "answer" -> 42
+    )
+}
+```
+
 The game object
 ---------------
 In order to specify the beginning state and general properties of the game, a special `game` object must be created. Here, fields for the name, description, resolution, starting scene, and FPS of the game are provided. FPS defaults to 30 if omitted, but all other fields must specified.
@@ -242,7 +311,7 @@ create a new entity {
     name = '<name>
     objects += (<instances>)
     actions += (<actions>)
-} of <type>
+} of '<type>
 ```
 
 Trigger an action
@@ -252,8 +321,8 @@ Trigger an action
 
 Changing ownership of an entity
 ```
-<instance or scene> gives <instance> to <instance>
-nobody gives <instance> to <instance>
+'<instance or scene> gives '<instance> to '<instance>
+nobody gives '<instance> to '<instance>
 ```
 
 Create a scene
