@@ -124,7 +124,6 @@ object create {
     global.game = game
     game
   }
-
 }
 
 object start {

@@ -54,7 +54,7 @@ object nobody extends GamelInstance {
       throw new IllegalStateException("instance " + inst + " is define but not marked as defined")
 
     if (nobody isUsed inst)
-      throw new IllegalArgumentException("instance " + inst + " does not belong to nobody")
+      throw new IllegalArgumentException("instance " + inst + " belongs to someone!")
 
     var obj = global.entities(inst)
 

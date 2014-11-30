@@ -45,6 +45,28 @@ abstract class GamelEntity extends Drawable {
   }
 
   /**
+   * Checks if has ownership of an instance
+   * @return true if objects contains the instance, false otherwise
+   * */
+  def has(inst: Symbol): Boolean = {
+
+    if (this.isInstanceOf[GamelType]) 
+      throw new UnsupportedOperationException(name + " is not an instance or scene")
+
+    if (inst == null)
+      throw new IllegalArgumentException("instance is null")
+
+    if (!(global.entities contains inst))
+      throw new UndefinedInstanceException("instance " + inst + "is undefined")
+
+    return objects contains inst
+  }
+
+  def inventory(): List[Symbol] = {
+    return objects.keySet.toList
+  }
+
+  /**
    * Every child class of Entity will want to
    * OVERRIDE this method if it hopes to
    * actually render some stuff on the screen

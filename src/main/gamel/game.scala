@@ -35,20 +35,9 @@ protected[gamel] abstract class GamelGame {
     // get the scene
     val destScene = global.scenes(sce)
 
-    // check whether the scene has been initialized because we are doing lazy evaluation
-    if (!destScene.loaded) {
-      // load the scene and its objects
-      destScene initObjects
+    // load the scene
+    destScene load
 
-      // initializing renderers
-      destScene initRenderers
-
-      // load scene's actions
-      destScene initActions
-
-      // mark the scene as loaded so we don't load this again
-      destScene.loaded = true
-    }
     // switching to the dest scene
     gamel.game.currentScene = destScene
   }
