@@ -50,7 +50,7 @@ abstract class GamelEntity extends Drawable {
    * */
   def has(inst: Symbol): Boolean = {
 
-    if (this.isInstanceOf[GamelType]) 
+    if (this.isInstanceOf[GamelType])
       throw new UnsupportedOperationException(name + " is not an instance or scene")
 
     if (inst == null)
@@ -82,7 +82,7 @@ abstract class GamelEntity extends Drawable {
 
   /**
    * Recursively initializing the entity's renderers
-   */ 
+   */
   protected[gamel] def initRenderers(): Unit = {
     if (renderer != null)
       renderer.init()
@@ -94,11 +94,11 @@ abstract class GamelEntity extends Drawable {
 
   /**
    * Recursively initializing the entity's objects
-   */ 
+   */
   protected[gamel] def initObjects(): Unit = {
     objects foreach {
       o => {
-        if (o._2 == null && !(global.entities contains o._1)) 
+        if (o._2 == null && !(global.entities contains o._1))
           // objects not found
           throw new UndefinedInstanceException("The object "  + o._1 + " has not been found")
         else {
@@ -124,7 +124,7 @@ abstract class GamelEntity extends Drawable {
         else {
           val action = global.actions(a._1)
           actions(a._1) = action
-          if (action.init != null) 
+          if (action.init != null)
             action.init()
         }
       }
