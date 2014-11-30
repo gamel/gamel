@@ -5,6 +5,7 @@
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{courier}
+\usepackage{ragged2e}
 
 \title{GameL}
 \subtitle{The Game Scripting Language}
@@ -385,6 +386,19 @@
     \end{column}
     \end{columns}
 \end{frame}
+
+\begin{frame}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{foo-instance}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{baz-instance}
+    \includegraphics[width=4cm, trim= 4cm 4cm 4cm 4cm]{bar-instance}
+
+    \pause
+
+    \begin{center}
+    \color{green}
+    \huge{Bazzzz!!}
+    \end{center}
+\end{frame}
 }
 
 \begin{frame}[fragile]
@@ -434,21 +448,39 @@
 \begin{frame}[fragile]
     \frametitle{Graphics}
     \framesubtitle{GamelRenderer}
-    Pass the GamelRenderer to the scene or entity:
+    Pass the GamelRenderer to the scene, entity, or instance:
     \begin{lstlisting}[basicstyle=\small]
     define a new entity {
         name = 'Foo
         renderer = FooRenderer
     }
+    \end{lstlisting}
+    \includegraphics[width=10cm, trim= 4cm 4cm 4cm 4cm]{Foo-render}
+\end{frame}
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{GamelRenderer}
+    Pass the GamelRenderer to the scene, entity, or instance:
+    \begin{lstlisting}[basicstyle=\small]
     create a new instance {
         name = 'bar
         renderer = BarRenderer
     } of 'Bar
+    \end{lstlisting}
+    \includegraphics[width=10cm, trim= 4cm 4cm 4cm 4cm]{bar-render}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Graphics}
+    \framesubtitle{GamelRenderer}
+    Pass the GamelRenderer to the scene, entity, or instance:
+    \begin{lstlisting}[basicstyle=\small]
     create a new scene {
-        name = 'Room
+        name = 'Sunset
         renderer = SceneRenderer
     }
     \end{lstlisting}
+    \includegraphics[width=10cm, trim= 4cm 4cm 4cm 4cm]{scene-render}
 \end{frame}
 
 \begin{frame}
@@ -464,15 +496,16 @@
 \begin{frame}[fragile]
     \frametitle{Graphics}
     \framesubtitle{Switching scenes}
-    To switch scenes:
     \begin{lstlisting}
-    go to 'Scene2
+    go to 'Moonrise
     \end{lstlisting}
+    \includegraphics<1>[width=5cm]{scene}
+    \includegraphics<2>[width=5cm]{transition}
 \end{frame}
 
 \begin{frame}
     \frametitle{Graphics}
-    \framesubtitle{Require and Use and GamelRenderer}
+    \framesubtitle{Require and Use}
     \begin{itemize}[<+->]
         \item{Support for more easily using images in game design}
         \item{Allows "aliasing" of images}
@@ -484,8 +517,8 @@
     \frametitle{Graphics}
     \framesubtitle{Require and Use}
     \begin{lstlisting}
-     require image "scene.jpg" as "bg"
-     // now scene.jpg can be refered to as "bg"
+     require image "sunset.jpg" as "bg"
+     // now sunset.jpg can be refered to as "bg"
 
      ...
 
@@ -517,6 +550,8 @@
 \begin{frame}[fragile]
     \frametitle{Event handling}
     To toggle an event handler:
+    \begin{columns}[T]
+    \begin{column}[T]{5cm}
     \begin{lstlisting}
     turn KeyPress on
     turn MousePress off
@@ -527,14 +562,20 @@
     \begin{lstlisting}
     detect KeyPress
     \end{lstlisting}
+    \end{column}
+    \begin{column}[T]{5cm}
+    \includegraphics[width=5cm]{keyboard}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Starting the game}
-    To start rendering the game:
-    \begin{lstlisting}
-    start game
-    \end{lstlisting}
+    \begin{center}
+        \huge{
+            \texttt{start game}
+        }
+    \end{center}
 \end{frame}
 
 \begin{frame}
