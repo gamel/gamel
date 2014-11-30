@@ -150,13 +150,14 @@ create a new instance {
 
 If an entity A tries to give an entity B to some other entity, and A does not own B, an exception is thrown. If A does own B, and something causes the transfer of ownership to fail, A retains ownership of B. Ownership is not transitive.
 
-To check if an instance or scene owns another instance, use the `has` keyword.
+To check if an instance or scene owns another instance, use the `has` keyword, which will return a Boolean:
 ```
 if('foo has 'bar){
     // case foo owns bar
 } else {
     // case foo doesn't own bar
 }
+```
 
 Actions
 -------
