@@ -20,7 +20,6 @@ project/plugins/project/
 *.aux
 *.nav
 *.out
-*.pdf
 *.snm
 *.toc
 *.vrb
